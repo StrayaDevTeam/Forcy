@@ -76,7 +76,7 @@ SBIconView *currentlyHighlightedIcon;
     [self addGestureRecognizer:swipeUp];
 
     UILongPressGestureRecognizer *longPress = [[[%c(UILongPressGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swappedGestures:)] autorelease];
-    longPress.minimumPressDuration = 0.5;
+    longPress.minimumPressDuration = 0.3;
     [self addGestureRecognizer:longPress];
 
     %orig;

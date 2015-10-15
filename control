@@ -1,6 +1,6 @@
 Package: com.strayadevteam.forcy
 Name: Forcy
-Depends: mobilesubstrate
+Depends: mobilesubstrate, firmware(>=9.0)
 Version: 1.0.0
 Architecture: iphoneos-arm
 Description: Quick Actions on older devices.
