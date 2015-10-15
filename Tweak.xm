@@ -4,6 +4,8 @@
 #include <IOKit/hid/IOHIDEventSystemClient.h>
 #include <dlfcn.h>
 
+bool enabled;
+
 @interface SBApplicationController
     +(id)sharedInstance;
     -(id)applicationWithBundleIdentifier:(id)arg1 ;
@@ -37,16 +39,22 @@
 - (BOOL)isEditing;
 @end
 
+static void loadPreferences() {
+    CFPreferencesAppSynchronize(CFSTR("com.strayadevteam.forcyprefs"));
+
+    enabled = !CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
+}
+
 SBIconView *currentlyHighlightedIcon;
 
 %hook SBIconView 
 
 -(void)setLocation:(int)arg1 {
-
-    UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
-    swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
-    [self addGestureRecognizer:swipeUp];
-
+    if(enabled){
+        UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
+        swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
+        [self addGestureRecognizer:swipeUp];
+    }
     %orig;
 }
 - (id)initWithContentType:(unsigned long long)arg1{
@@ -73,3 +81,13 @@ SBIconView *currentlyHighlightedIcon;
     currentlyHighlightedIcon = highlighted ? self : nil;
 }
 %end
+
+%ctor{
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                NULL,
+                                (CFNotificationCallback)loadPreferences,
+                                CFSTR("com.strayadevteam.forcyprefs/prefsChanged"),
+                                NULL,
+                                CFNotificationSuspensionBehaviorDeliverImmediately);
+    loadPreferences();
+}

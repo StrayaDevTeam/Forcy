@@ -5,6 +5,6 @@
 	detail = ForcyPrefsListController;
 	icon = ForcyPrefs.png;
 	isController = 1;
-	label = ForcyPrefs;
+	label = Forcy;
     };
 }
