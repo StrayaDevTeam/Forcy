@@ -4,7 +4,7 @@ TARGET = iphone:clang:latest:latest
 include theos/makefiles/common.mk
 
 BUNDLE_NAME = ForcyPrefs
-ForcyPrefs_FILES = ForcyPrefs.mm
+ForcyPrefs_FILES = $(wildcard *.mm)
 ForcyPrefs_INSTALL_PATH = /Library/PreferenceBundles
 ForcyPrefs_FRAMEWORKS = UIKit
 ForcyPrefs_PRIVATE_FRAMEWORKS = Preferences

@@ -6,12 +6,6 @@
 	<array>
 		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>ForcyPrefs</string>
-		</dict>
-		<dict>
-			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
 			<true/>
@@ -21,6 +15,45 @@
 			<string>enabled</string>
 			<key>label</key>
 			<string>Enabled</string>
+			<key>PostNotification</key>
+			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
+		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>footerText</key>
+            <string>Gives a short vibration when enabled. Make sure 'Vibrate on Silent' is enabled in Settings under Sound.</string>
+        </dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.strayadevteam.forcyprefs</string>
+			<key>key</key>
+			<string>hapticFeedbackIsEnabled</string>
+			<key>label</key>
+			<string>Haptic Feedback</string>
+			<key>PostNotification</key>
+			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
+		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>footerText</key>
+            <string>Long Press to invoke 3D Touch Menu, Swipe Up to edit apps.</string>
+        </dict>        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.strayadevteam.forcyprefs</string>
+			<key>key</key>
+			<string>swapInvokeMethods</string>
+			<key>label</key>
+			<string>Swap Invoke Method</string>
 			<key>PostNotification</key>
 			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
 		</dict>
