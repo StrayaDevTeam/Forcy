@@ -1,8 +1,5 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioServices.h>
-#include <IOKit/hid/IOHIDEventSystem.h>
-#include <IOKit/hid/IOHIDEventSystemClient.h>
-#include <dlfcn.h>
 
 extern "C" void AudioServicesPlaySystemSoundWithVibration(SystemSoundID inSystemSoundID, id unknown, NSDictionary *options);
 
