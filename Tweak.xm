@@ -28,9 +28,9 @@ bool swapInvokeMethods;
 @interface SBIconView : UIView
 @property(retain, nonatomic) SBIcon *icon;
 +(id)sharedInstance;
+- (void)_handleSecondHalfLongPressTimer:(id)arg1;
 // New methods
 - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture;
-- (void)fc_swappedGestures;
 @end
 
 @interface SBIconViewMap
@@ -41,6 +41,7 @@ bool swapInvokeMethods;
 @interface SBIconController
 +(id)sharedInstance;
 - (void)_revealMenuForIconView:(id)arg1 presentImmediately:(BOOL)arg2;
+- (BOOL)_canRevealShortcutMenu;
 - (BOOL)isEditing;
 - (void)iconHandleLongPress:(id)arg1;
 - (void)setIsEditing:(_Bool)arg1;
@@ -73,11 +74,8 @@ SBIconView *currentlyHighlightedIcon;
 -(void)setLocation:(int)arg1 {
     UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
     swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
+    swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
     [self addGestureRecognizer:swipeUp];
-
-    UILongPressGestureRecognizer *longPress = [[[%c(UILongPressGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swappedGestures:)] autorelease];
-    longPress.minimumPressDuration = 0.3;
-    [self addGestureRecognizer:longPress];
 
     %orig;
 }
@@ -86,34 +84,33 @@ SBIconView *currentlyHighlightedIcon;
 }
 
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
-    if(enabled){
-    if ([[%c(SBIconController) sharedInstance] isEditing])
-        return;
-
-    if(!swapInvokeMethods){
-        [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
-        hapticFeedback();
-    } else {
-        [[%c(SBIconController) sharedInstance] setIsEditing:YES];
-    }
-}
-}
-%new - (void)fc_swappedGestures:(UILongPressGestureRecognizer *)gesture {
-    if(enabled){
-        if ([[%c(SBIconController) sharedInstance] isEditing])
-            return;
-
-        if(swapInvokeMethods){
-            [[%c(SBIconController) sharedInstance] setIsEditing:NO];
+    if(enabled && gesture.state == UIGestureRecognizerStateRecognized){
+        if(!swapInvokeMethods && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu]){
             [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
             hapticFeedback();
         } else {
-            [[%c(SBIconController) sharedInstance] setIsEditing:YES];
+            [self _handleSecondHalfLongPressTimer:nil];
         }
     }
-    if(!swapInvokeMethods){
-        [[%c(SBIconController) sharedInstance] setIsEditing:YES];
+}
+%new
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] 
+                        && ![[%c(SBIconController) sharedInstance] _canRevealShortcutMenu])
+        return NO;
+    
+    return YES;
+}
+- (void)_handleSecondHalfLongPressTimer:(id)timer {
+    if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] 
+                                                    && swapInvokeMethods && timer != nil){
+        [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
+        hapticFeedback();
+        
+        return;
     }
+    
+    %orig;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
