@@ -29,6 +29,7 @@ bool swapInvokeMethods;
 @property(retain, nonatomic) SBIcon *icon;
 +(id)sharedInstance;
 - (void)_handleSecondHalfLongPressTimer:(id)arg1;
+- (void)cancelLongPressTimer;
 // New methods
 - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture;
 @end
@@ -105,6 +106,7 @@ SBIconView *currentlyHighlightedIcon;
     if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] 
                                                     && swapInvokeMethods && timer != nil){
         [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
+        [self cancelLongPressTimer];
         hapticFeedback();
         
         return;
