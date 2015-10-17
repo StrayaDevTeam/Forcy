@@ -1,7 +1,5 @@
 #import <Preferences/PSListController.h>
 
-int width = self.view.bounds.size.width;
-
 @interface ForcyPrefsListController: PSListController {
 }
 @end
