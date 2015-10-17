@@ -5,18 +5,6 @@
 	<key>items</key>
 	<array>
 		<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-		</dict>
-				<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-		</dict>
-				<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-		</dict>
-		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
