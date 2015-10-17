@@ -33,6 +33,7 @@ bool removeBackgroundBlur;
 
 @interface SBIconView : UIView
 @property(retain, nonatomic) SBIcon *icon;
+@property(retain, nonatomic) UILongPressGestureRecognizer *shortcutMenuPeekGesture;
 +(id)sharedInstance;
 - (void)_handleSecondHalfLongPressTimer:(id)arg1;
 - (void)cancelLongPressTimer;

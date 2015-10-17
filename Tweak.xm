@@ -26,6 +26,9 @@ SBIconView *currentlyHighlightedIcon;
 %hook SBIconView 
 
 -(void)setLocation:(int)arg1 {
+    self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
+    self.shortcutMenuPeekGesture.minimumPressDuration = 0.5f;
+
     UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
     swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
     swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
