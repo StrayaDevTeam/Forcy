@@ -1,49 +1,4 @@
-#import <UIKit/UIKit.h>
-#import <AudioToolbox/AudioServices.h>
-
-extern "C" void AudioServicesPlaySystemSoundWithVibration(SystemSoundID inSystemSoundID, id unknown, NSDictionary *options);
-
-bool enabled;
-bool hapticFeedbackIsEnabled;
-bool swapInvokeMethods;
-
-@interface SBApplicationController
-+(id)sharedInstance;    
--(id)applicationWithBundleIdentifier:(id)arg1 ;
-@end
-
-@interface SBApplication
-@end
-
-@interface SBApplicationIcon : NSObject
--(id)initWithApplication:(id)arg1;
-@end
-
-@interface SBIcon
-@end
-
-@interface SBIconView : UIView
-@property(retain, nonatomic) SBIcon *icon;
-+(id)sharedInstance;
-- (void)_handleSecondHalfLongPressTimer:(id)arg1;
-- (void)cancelLongPressTimer;
-// New methods
-- (void)fc_swiped:(UISwipeGestureRecognizer *)gesture;
-@end
-
-@interface SBIconViewMap
-+(id)homescreenMap;
--(id)mappedIconViewForIcon:(id)arg1 ;
-@end
-
-@interface SBIconController
-+(id)sharedInstance;
-- (void)_revealMenuForIconView:(id)arg1 presentImmediately:(BOOL)arg2;
-- (BOOL)_canRevealShortcutMenu;
-- (BOOL)isEditing;
-- (void)iconHandleLongPress:(id)arg1;
-- (void)setIsEditing:(_Bool)arg1;
-@end
+#import "Forcy.h"
 
 static void loadPreferences() {
     CFPreferencesAppSynchronize(CFSTR("com.strayadevteam.forcyprefs"));
@@ -57,8 +12,8 @@ void hapticFeedback(){
     if(hapticFeedbackIsEnabled){
         NSMutableDictionary* dict = [NSMutableDictionary dictionary];
         NSMutableArray* arr = [NSMutableArray array ];
-        [arr addObject:[NSNumber numberWithBool:YES]]; //vibrate for 2000ms
-        [arr addObject:[NSNumber numberWithInt:50]];
+        [arr addObject:[NSNumber numberWithBool:YES]];
+        [arr addObject:[NSNumber numberWithInt:50]]; //vibrate for 50ms
         [dict setObject:arr forKey:@"VibePattern"];
         [dict setObject:[NSNumber numberWithInt:1] forKey:@"Intensity"];
         AudioServicesPlaySystemSoundWithVibration(4095,nil,dict);
@@ -100,8 +55,11 @@ SBIconView *currentlyHighlightedIcon;
     return YES;
 }
 - (void)_handleSecondHalfLongPressTimer:(id)timer {
-    if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] 
-                                                    && swapInvokeMethods && timer != nil){
+    %orig;
+}
+- (void)_handleFirstHalfLongPressTimer:(id)timer{
+    if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] && swapInvokeMethods && timer != nil){
+
         [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
         [self cancelLongPressTimer];
         hapticFeedback();
@@ -115,6 +73,14 @@ SBIconView *currentlyHighlightedIcon;
 - (void)setHighlighted:(BOOL)highlighted {
     %orig;
     currentlyHighlightedIcon = highlighted ? self : nil;
+}
+%end
+
+%hook SBApplicationShortcutMenu
+-(void)_setupViews{
+    %orig;
+    UIView *backgroundView = MSHookIvar<UIView*>(self, "_backgroundContainerView");
+    [backgroundView setAlpha:0.1];
 }
 %end
 
