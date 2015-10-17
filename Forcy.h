@@ -7,6 +7,7 @@ extern "C" void AudioServicesPlaySystemSoundWithVibration(SystemSoundID inSystem
 bool enabled;
 bool hapticFeedbackIsEnabled;
 bool swapInvokeMethods;
+bool removeBackgroundBlur;
 
 @interface _UIBackdropViewSettings : NSObject
 +(id)settingsForStyle:(long long)arg1 graphicsQuality:(long long)arg2 ;
@@ -54,9 +55,4 @@ bool swapInvokeMethods;
 
 @interface SBApplicationShortcutMenuBackgroundView : UIView
 -(void)setAlpha:(double)arg1;
-@end
-
-@interface SBApplicationShortcutMenu : UIView{
-	UIView *_backgroundContainerView;
-}
 @end

@@ -6,6 +6,7 @@ static void loadPreferences() {
     enabled = !CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     hapticFeedbackIsEnabled = !CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     swapInvokeMethods = !CFPreferencesCopyAppValue(CFSTR("swapInvokeMethods"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("swapInvokeMethods"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
+    removeBackgroundBlur = !CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
 }
 
 void hapticFeedback(){
@@ -79,8 +80,29 @@ SBIconView *currentlyHighlightedIcon;
 %hook SBApplicationShortcutMenu
 -(void)_setupViews{
     %orig;
-    UIView *backgroundView = MSHookIvar<UIView*>(self, "_backgroundContainerView");
-    [backgroundView setAlpha:0.1];
+    if(enabled && removeBackgroundBlur){
+        UIView *backgroundView = MSHookIvar<UIView*>(self, "_backgroundContainerView");
+        [backgroundView setAlpha:0.1];
+    }
+}
+%end
+
+%hook UIScreen
+- (int)_forceTouchCapability {
+    return 1;
+}
+%end
+%hook UITraitCollection
+- (int)forceTouchCapability {
+    return 1;
+}
+%end
+%hook UIDevice
+- (BOOL)_supportsForceTouch {
+    return YES;
+}
+- (BOOL)_supportsHapticFeedback {
+    return YES;
 }
 %end
 

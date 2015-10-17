@@ -57,6 +57,20 @@
 			<key>PostNotification</key>
 			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
 		</dict>
+				<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.strayadevteam.forcyprefs</string>
+			<key>key</key>
+			<string>removeBackgroundBlur</string>
+			<key>label</key>
+			<string>Remove Background Blur</string>
+			<key>PostNotification</key>
+			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
+		</dict>
 	</array>
 	<key>title</key>
 	<string>Forcy</string>
