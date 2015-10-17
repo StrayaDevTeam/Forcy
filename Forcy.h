@@ -18,6 +18,7 @@ bool removeBackgroundBlur;
 @interface SBApplicationController
 +(id)sharedInstance;    
 -(id)applicationWithBundleIdentifier:(id)arg1 ;
+
 @end
 
 @interface SBApplication
@@ -51,6 +52,7 @@ bool removeBackgroundBlur;
 - (BOOL)isEditing;
 - (void)iconHandleLongPress:(id)arg1;
 - (void)setIsEditing:(_Bool)arg1;
+- (void)_handleShortcutMenuPeek:(id)arg1;
 @end
 
 @interface SBApplicationShortcutMenuBackgroundView : UIView
