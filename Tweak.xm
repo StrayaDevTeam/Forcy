@@ -35,12 +35,12 @@ SBIconView *currentlyHighlightedIcon;
     swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
     [self addGestureRecognizer:swipeUp];
 
-    if(useSlideDownGestureToo){
+    /*if(useSlideDownGestureToo){
         UISwipeGestureRecognizer *swipeDown = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
     swipeDown.direction = UISwipeGestureRecognizerDirectionDown;
     swipeDown.delegate = (id <UIGestureRecognizerDelegate>)self;
     [self addGestureRecognizer:swipeDown];
-    }
+    }*/
 
     %orig;
 }
