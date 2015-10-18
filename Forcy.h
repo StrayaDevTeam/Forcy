@@ -10,7 +10,7 @@ bool swapInvokeMethods;
 bool removeBackgroundBlur;
 
 @interface _UIBackdropViewSettings : NSObject
-+(id)settingsForStyle:(long long)arg1 graphicsQuality:(long long)arg2 ;
+-(id)settingsForStyle:(long long)arg1 graphicsQuality:(long long)arg2 ;
 -(void)setGrayscaleTintAlpha:(CGFloat)arg1;
 -(CGFloat)grayscaleTintAlpha;
 @end
@@ -56,6 +56,5 @@ bool removeBackgroundBlur;
 - (void)_handleShortcutMenuPeek:(id)arg1;
 @end
 
-@interface SBApplicationShortcutMenuBackgroundView : UIView
--(void)setAlpha:(double)arg1;
+@interface SBApplicationShortcutMenu : UIView
 @end

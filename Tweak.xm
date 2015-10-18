@@ -20,6 +20,14 @@ void hapticFeedback(){
         AudioServicesPlaySystemSoundWithVibration(4095,nil,dict);
     }
 }
+id forcePressArg;
+
+%hook SBMainSwitcherGestureCoordinator
+- (void)_forcePressGestureBeganWithGesture:(id)arg1{
+    %orig;
+    forcePressArg = arg1;
+}
+%end
 
 SBIconView *currentlyHighlightedIcon;
 
@@ -34,10 +42,21 @@ SBIconView *currentlyHighlightedIcon;
     swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
     [self addGestureRecognizer:swipeUp];
 
+    UISwipeGestureRecognizer *swipeLeft = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(handleForceSwitcher:)] autorelease];
+    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self addGestureRecognizer:swipeLeft];
+
     %orig;
 }
 - (id)initWithContentType:(unsigned long long)arg1{
 	return %orig;
+}
+
+%new - (void)handleForceSwitcher:(UISwipeGestureRecognizer*)gesture{
+    if(gesture.state == UIGestureRecognizerStateRecognized){
+        [[%c(SBMainSwitcherGestureCoordinator) sharedInstance] _forcePressGestureBeganWithGesture:forcePressArg];
+        HBLogInfo(@"MEMES");
+    }
 }
 
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
@@ -86,17 +105,8 @@ SBIconView *currentlyHighlightedIcon;
     if(enabled && removeBackgroundBlur){
         UIView *backgroundView = MSHookIvar<UIView*>(self, "_backgroundContainerView");
         [backgroundView setAlpha:0.1];
-
-        
     }
 }
-- (void)_peekWithContentFraction:(double)arg1 smoothedBlurFraction:(double)arg2{
-    %orig;
-    _UIBackdropViewSettings *_blurSettings = MSHookIvar<_UIBackdropViewSettings*>(self, "_blurSettings");
-
-    [_blurSettings settingsForStyle:1 graphicsQuality:1];
-}
-
 %end
 
 %hook UIScreen
