@@ -9,6 +9,9 @@ bool hapticFeedbackIsEnabled;
 bool swapInvokeMethods;
 bool removeBackgroundBlur;
 
+@interface _UIBackdropView : UIView
+@end
+
 @interface _UIBackdropViewSettings : NSObject
 -(id)settingsForStyle:(long long)arg1 graphicsQuality:(long long)arg2 ;
 -(void)setGrayscaleTintAlpha:(CGFloat)arg1;

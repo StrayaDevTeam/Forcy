@@ -84,8 +84,8 @@ SBIconView *currentlyHighlightedIcon;
 -(void)_setupViews{
     %orig;
     if(enabled && removeBackgroundBlur){
-        UIView *backgroundView = MSHookIvar<UIView*>(self, "_backgroundContainerView");
-        [backgroundView setAlpha:0.1];
+        _UIBackdropView *_blurView = MSHookIvar<_UIBackdropView*>(self, "_blurView");
+        [_blurView setHidden:true];
     }
 }
 %end
