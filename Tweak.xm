@@ -86,8 +86,17 @@ SBIconView *currentlyHighlightedIcon;
     if(enabled && removeBackgroundBlur){
         UIView *backgroundView = MSHookIvar<UIView*>(self, "_backgroundContainerView");
         [backgroundView setAlpha:0.1];
+
+        
     }
 }
+- (void)_peekWithContentFraction:(double)arg1 smoothedBlurFraction:(double)arg2{
+    %orig;
+    _UIBackdropViewSettings *_blurSettings = MSHookIvar<_UIBackdropViewSettings*>(self, "_blurSettings");
+
+    [_blurSettings settingsForStyle:1 graphicsQuality:1];
+}
+
 %end
 
 %hook UIScreen
