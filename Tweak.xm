@@ -7,7 +7,6 @@ static void loadPreferences() {
     hapticFeedbackIsEnabled = !CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     swapInvokeMethods = !CFPreferencesCopyAppValue(CFSTR("swapInvokeMethods"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("swapInvokeMethods"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     removeBackgroundBlur = !CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
-    useSlideDownGestureToo = !CFPreferencesCopyAppValue(CFSTR("useSlideDownGestureToo"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("useSlideDownGestureToo"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
 }
 
 void hapticFeedback(){
@@ -28,19 +27,12 @@ SBIconView *currentlyHighlightedIcon;
 
 -(void)setLocation:(int)arg1 {
     self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
-    self.shortcutMenuPeekGesture.minimumPressDuration = 0.5f;
+    self.shortcutMenuPeekGesture.minimumPressDuration = 0.4f;
 
     UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
     swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
     swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
     [self addGestureRecognizer:swipeUp];
-
-    /*if(useSlideDownGestureToo){
-        UISwipeGestureRecognizer *swipeDown = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
-    swipeDown.direction = UISwipeGestureRecognizerDirectionDown;
-    swipeDown.delegate = (id <UIGestureRecognizerDelegate>)self;
-    [self addGestureRecognizer:swipeDown];
-    }*/
 
     %orig;
 }

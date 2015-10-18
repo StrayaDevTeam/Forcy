@@ -8,7 +8,6 @@ bool enabled;
 bool hapticFeedbackIsEnabled;
 bool swapInvokeMethods;
 bool removeBackgroundBlur;
-bool useSlideDownGestureToo;
 
 @interface _UIBackdropView : UIView
 @end
