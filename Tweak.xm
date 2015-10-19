@@ -92,19 +92,16 @@ SBIconView *currentlyHighlightedIcon;
 
 %hook UIScreen
 - (int)_forceTouchCapability {
-    return 1;
+    return 2;
 }
 %end
 %hook UITraitCollection
 - (int)forceTouchCapability {
-    return 1;
+    return 2;
 }
 %end
 %hook UIDevice
 - (BOOL)_supportsForceTouch {
-    return YES;
-}
-- (BOOL)_supportsHapticFeedback {
     return YES;
 }
 %end
