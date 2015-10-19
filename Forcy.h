@@ -8,12 +8,11 @@
 
 extern "C" void AudioServicesPlaySystemSoundWithVibration(SystemSoundID inSystemSoundID, id unknown, NSDictionary *options);
 
-Boolean enabled;
-bool enableTweak;
-bool hapticFeedbackIsEnabled;
-bool swapInvokeMethods;
-bool removeBackgroundBlur;
-bool preferForceTouch;
+BOOL enableTweak;
+BOOL hapticFeedbackIsEnabled;
+BOOL swapInvokeMethods;
+BOOL removeBackgroundBlur;
+BOOL preferForceTouch;
 
 @interface _UIBackdropView : UIView
 @end

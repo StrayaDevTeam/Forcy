@@ -3,11 +3,13 @@
 static void loadPreferences() {
     CFPreferencesAppSynchronize((CFStringRef)TWEAK_SETTINGS);
     Boolean found;
-    enabled = CFPreferencesGetAppBooleanValue(CFSTR("enabled"), (CFStringRef)TWEAK_SETTINGS, &found);
-    enableTweak = (found && enabled);
-    /*preferForceTouch = [preferences objectForKey:@"preferForceTouch"] ? [[preferences objectForKey:@"preferForceTouch"] boolValue] : NO;
-    removeBackgroundBlur = [preferences objectForKey:@"removeBackgroundBlur"] ? [[preferences objectForKey:@"removeBackgroundBlur"] boolValue] : NO;
-*/}
+    Boolean enabled = CFPreferencesGetAppBooleanValue(CFSTR("enabled"), (CFStringRef)TWEAK_SETTINGS, &found);
+    enableTweak = ((found && enabled) || !found); // --> defaulting to YES (I hope :P)
+    enabled = CFPreferencesGetAppBooleanValue(CFSTR("preferForceTouch"), (CFStringRef)TWEAK_SETTINGS, &found);
+    preferForceTouch = (found && enabled); // --> defaulting to NO
+    enabled = CFPreferencesGetAppBooleanValue(CFSTR("removeBackgroundBlur"), (CFStringRef)TWEAK_SETTINGS, &found);
+    removeBackgroundBlur = (found && enabled); // --> defaulting to NO
+}
 
 static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
   loadPreferences();
@@ -88,7 +90,7 @@ void hapticFeedback(){
 }
 
 - (void)_revealMenuForIconView:(id)arg1 presentImmediately:(_Bool)arg2 {
-    if(!enabled){
+    if(!enableTweak){
         %orig(arg1, YES);
     }
 }
@@ -98,7 +100,7 @@ void hapticFeedback(){
 %hook SBApplicationShortcutMenu
 -(void)_setupViews{
     %orig;
-    if(enabled && removeBackgroundBlur){
+    if(enableTweak && removeBackgroundBlur){
         _UIBackdropView *_blurView = MSHookIvar<_UIBackdropView*>(self, "_blurView");
         [_blurView setHidden:true];
     }
