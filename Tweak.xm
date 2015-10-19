@@ -1,12 +1,16 @@
 #import "Forcy.h"
 
 static void loadPreferences() {
-    CFPreferencesAppSynchronize(CFSTR("com.strayadevteam.forcyprefs"));
+    CFPreferencesAppSynchronize((CFStringRef)TWEAK_SETTINGS);
+    Boolean found;
+    enabled = CFPreferencesGetAppBooleanValue(CFSTR("enabled"), (CFStringRef)TWEAK_SETTINGS, &found);
+    enableTweak = (found && enabled);
+    /*preferForceTouch = [preferences objectForKey:@"preferForceTouch"] ? [[preferences objectForKey:@"preferForceTouch"] boolValue] : NO;
+    removeBackgroundBlur = [preferences objectForKey:@"removeBackgroundBlur"] ? [[preferences objectForKey:@"removeBackgroundBlur"] boolValue] : NO;
+*/}
 
-    enabled = !CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
-    hapticFeedbackIsEnabled = !CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
-    swapInvokeMethods = !CFPreferencesCopyAppValue(CFSTR("swapInvokeMethods"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("swapInvokeMethods"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
-    removeBackgroundBlur = !CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
+static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+  loadPreferences();
 }
 
 void hapticFeedback(){
@@ -21,109 +25,105 @@ void hapticFeedback(){
     }
 }
 
-SBIconView *currentlyHighlightedIcon;
-
 %hook SBIconView 
 
--(void)setLocation:(int)arg1 {
-    self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
-    self.shortcutMenuPeekGesture.minimumPressDuration = 0.4f;
-
-    UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
-    swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
-    swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
-    [self addGestureRecognizer:swipeUp];
-
+- (void)addGestureRecognizer:(UIGestureRecognizer *)addGesture {
+    if (addGesture != nil && addGesture == self.shortcutMenuPeekGesture) {
+        UILongPressGestureRecognizer *menuCanceller = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+        menuCanceller.minimumPressDuration = 1.0f;
+        menuCanceller.delaysTouchesEnded = NO;
+        menuCanceller.cancelsTouchesInView = NO;
+        menuCanceller.allowableMovement = 1.0f;
+        %orig(menuCanceller);
+        
+        if(preferForceTouch){
+            self.shortcutMenuPeekGesture.minimumPressDuration = 0.325f;
+        }
+        [addGesture setRequiredPreviewForceState:0];
+        [addGesture requireGestureRecognizerToFail:menuCanceller];
+        
+        [menuCanceller release];
+    }
+    
     %orig;
 }
-- (id)initWithContentType:(unsigned long long)arg1{
-	return %orig;
-}
 
-%new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
-    if(enabled && gesture.state == UIGestureRecognizerStateRecognized){
-        if(!swapInvokeMethods && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu]){
-            [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
-            hapticFeedback();
-        } else {
-            [self _handleSecondHalfLongPressTimer:nil];
-        }
-    }
-}
-%new
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] 
-                        && ![[%c(SBIconController) sharedInstance] _canRevealShortcutMenu])
+- (BOOL)_delegateTapAllowed {
+    if ([[%c(SBIconController) sharedInstance] presentedShortcutMenu] != nil && !self.isHighlighted)
         return NO;
     
-    return YES;
+    return %orig;
 }
-- (void)_handleSecondHalfLongPressTimer:(id)timer {
+
+- (void)_handleFirstHalfLongPressTimer:(id)arg1 {
+    if ([[%c(SBIconController) sharedInstance] _canRevealShortcutMenu]) {
+        hapticFeedback();
+    }
     %orig;
 }
-- (void)_handleFirstHalfLongPressTimer:(id)timer{
-    if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] && swapInvokeMethods && timer != nil){
 
-        [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
+- (void)_handleSecondHalfLongPressTimer:(id)arg1 {
+    if ([[%c(SBIconController) sharedInstance] presentedShortcutMenu] != nil) {
         [self cancelLongPressTimer];
-        hapticFeedback();
-        
+        [self setHighlighted:NO];
         return;
     }
-    
     %orig;
+}
+%new
+- (void)handleLongPressGesture:(UILongPressGestureRecognizer *)gesture {
+    HBLogInfo(@"handleLongPressGesture has been called!");
+    if(gesture.state == UIGestureRecognizerStateRecognized && !preferForceTouch){
+        //[[%c(SBIconController) sharedInstance] _revealMenuForIconView:self :1];
+    }
+}
+%end
+
+%hook SBIconController
+- (BOOL)iconShouldAllowTap:(SBIconView*)arg1 {
+    if (self.presentedShortcutMenu != nil && !arg1.isHighlighted)
+        return NO;
+    
+    return %orig;
 }
 
-- (void)setHighlighted:(BOOL)highlighted {
-    %orig;
-    currentlyHighlightedIcon = highlighted ? self : nil;
+- (void)_revealMenuForIconView:(id)arg1 presentImmediately:(_Bool)arg2 {
+    if(!enabled){
+        %orig(arg1, YES);
+    }
 }
+
 %end
 
 %hook SBApplicationShortcutMenu
 -(void)_setupViews{
     %orig;
     if(enabled && removeBackgroundBlur){
-        UIView *backgroundView = MSHookIvar<UIView*>(self, "_backgroundContainerView");
-        [backgroundView setAlpha:0.1];
-
-        
+        _UIBackdropView *_blurView = MSHookIvar<_UIBackdropView*>(self, "_blurView");
+        [_blurView setHidden:true];
     }
 }
-- (void)_peekWithContentFraction:(double)arg1 smoothedBlurFraction:(double)arg2{
-    %orig;
-    _UIBackdropViewSettings *_blurSettings = MSHookIvar<_UIBackdropViewSettings*>(self, "_blurSettings");
-
-    [_blurSettings settingsForStyle:1 graphicsQuality:1];
-}
-
 %end
 
 %hook UIScreen
-- (int)_forceTouchCapability {
-    return 1;
-}
-%end
-%hook UITraitCollection
-- (int)forceTouchCapability {
-    return 1;
-}
-%end
-%hook UIDevice
-- (BOOL)_supportsForceTouch {
-    return YES;
-}
-- (BOOL)_supportsHapticFeedback {
-    return YES;
+- (long long)_forceTouchCapability {
+    return 4;
 }
 %end
 
+%hook UIDevice
+- (BOOL)_supportsForceTouch {
+    return TRUE;
+}
+%end
+
+
 %ctor{
+    loadPreferences();
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
                                 NULL,
-                                (CFNotificationCallback)loadPreferences,
+                                PreferencesChangedCallback,
                                 CFSTR("com.strayadevteam.forcyprefs/prefsChanged"),
                                 NULL,
-                                CFNotificationSuspensionBehaviorDeliverImmediately);
-    loadPreferences();
+                                CFNotificationSuspensionBehaviorDeliverImmediately);   
 }

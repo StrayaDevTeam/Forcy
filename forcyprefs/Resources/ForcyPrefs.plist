@@ -71,6 +71,20 @@
 			<key>PostNotification</key>
 			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
 		</dict>
+						<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.strayadevteam.forcyprefs</string>
+			<key>key</key>
+			<string>preferForceTouch</string>
+			<key>label</key>
+			<string>Use Fake 3D Touch</string>
+			<key>PostNotification</key>
+			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
+		</dict>
 	</array>
 	<key>title</key>
 	<string>Forcy</string>
