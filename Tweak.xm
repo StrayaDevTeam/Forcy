@@ -90,7 +90,7 @@ SBIconView *currentlyHighlightedIcon;
 
 %hook SBIconController
 - (void)_revealMenuForIconView:(SBIconView *)iconView presentImmediately:(BOOL)imm {
-    if(hapticFeedbackIsEnabled){
+    if(hapticFeedbackIsEnabled && !self.isEditing){
         hapticFeedback();
     }
     %orig(iconView, YES);
