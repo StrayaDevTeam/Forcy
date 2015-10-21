@@ -8,6 +8,8 @@ bool enabled;
 bool hapticFeedbackIsEnabled;
 bool swapInvokeMethods;
 bool removeBackgroundBlur;
+CGFloat shortHoldTime;
+int vibrationTime;
 
 @interface _UIBackdropView : UIView
 @end

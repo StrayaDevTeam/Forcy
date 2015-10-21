@@ -42,21 +42,28 @@
             <key>cell</key>
             <string>PSGroupCell</string>
             <key>footerText</key>
-            <string>Long Press to invoke 3D Touch Menu, Swipe Up to edit apps.</string>
-        </dict>        <dict>
+            <string>No, this doesn't magically make your screen force sensitive. Coming soon™</string>
+        </dict>        
+        <dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
 			<false/>
+			<key>enabled</key>
+			<false/>
 			<key>defaults</key>
 			<string>com.strayadevteam.forcyprefs</string>
 			<key>key</key>
-			<string>swapInvokeMethods</string>
+			<string>preferForceTouch</string>
 			<key>label</key>
-			<string>Swap Invoke Method</string>
+			<string>Prefer Force Touch</string>
 			<key>PostNotification</key>
 			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
 		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+        </dict>        
 				<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
@@ -70,6 +77,54 @@
 			<string>Remove Background Blur</string>
 			<key>PostNotification</key>
 			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
+		</dict>
+				<dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>footerText</key>
+            <string>Please use a value between 0.0 and 1.0. Any value over 1.0 will not work. Default value is 0.325</string>
+        </dict>    
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>placeholder</key>
+			<string>Time (s)</string>
+			<key>defaults</key>
+			<string>com.strayadevteam.forcyprefs</string>
+			<key>PostNotification</key>
+			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
+			<key>isDecimalPad</key>
+			<true/>
+			<key>default</key>
+			<string>0.325</string>
+			<key>key</key>
+			<string>shortHoldTime</string>
+			<key>label</key>
+			<string>Time to Invoke Menu (s)</string>
+		</dict>
+        		<dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>footerText</key>
+            <string>Recommeneded times are between 50ms and 100ms. Default is 50ms.</string>
+        </dict>       
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>placeholder</key>
+			<string>Vibration time (ms)</string>
+			<key>defaults</key>
+			<string>com.strayadevteam.forcyprefs</string>
+			<key>PostNotification</key>
+			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
+			<key>isNumeric</key>
+			<true/>
+			<key>default</key>
+			<string>50</string>
+			<key>key</key>
+			<string>vibrationTime</string>
+			<key>label</key>
+			<string>Vibration (ms)</string>
 		</dict>
 	</array>
 	<key>title</key>

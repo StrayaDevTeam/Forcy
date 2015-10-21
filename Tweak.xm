@@ -5,8 +5,9 @@ static void loadPreferences() {
 
     enabled = !CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     hapticFeedbackIsEnabled = !CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
-    swapInvokeMethods = !CFPreferencesCopyAppValue(CFSTR("swapInvokeMethods"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("swapInvokeMethods"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     removeBackgroundBlur = !CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
+    shortHoldTime = !CFPreferencesCopyAppValue(CFSTR("shortHoldTime"), CFSTR("com.strayadevteam.forcyprefs")) ? 0.325f : [(id)CFPreferencesCopyAppValue(CFSTR("shortHoldTime"), CFSTR("com.strayadevteam.forcyprefs")) floatValue];
+    vibrationTime = !CFPreferencesCopyAppValue(CFSTR("vibrationTime"), CFSTR("com.strayadevteam.forcyprefs")) ? 50 : [(id)CFPreferencesCopyAppValue(CFSTR("vibrationTime"), CFSTR("com.strayadevteam.forcyprefs")) intValue];
 }
 
 void hapticFeedback(){
@@ -14,7 +15,7 @@ void hapticFeedback(){
         NSMutableDictionary* dict = [NSMutableDictionary dictionary];
         NSMutableArray* arr = [NSMutableArray array ];
         [arr addObject:[NSNumber numberWithBool:YES]];
-        [arr addObject:[NSNumber numberWithInt:50]]; //vibrate for 50ms
+        [arr addObject:[NSNumber numberWithInt:vibrationTime]]; //vibrate for 50ms
         [dict setObject:arr forKey:@"VibePattern"];
         [dict setObject:[NSNumber numberWithInt:1] forKey:@"Intensity"];
         AudioServicesPlaySystemSoundWithVibration(4095,nil,dict);
@@ -27,7 +28,7 @@ SBIconView *currentlyHighlightedIcon;
 
 -(void)setLocation:(int)arg1 {
     self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
-    self.shortcutMenuPeekGesture.minimumPressDuration = 0.4f;
+    self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
 
     UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
     swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
@@ -36,19 +37,9 @@ SBIconView *currentlyHighlightedIcon;
 
     %orig;
 }
-- (id)initWithContentType:(unsigned long long)arg1{
-	return %orig;
-}
 
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
-    if(enabled && gesture.state == UIGestureRecognizerStateRecognized){
-        if(!swapInvokeMethods && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu]){
-            [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
-            hapticFeedback();
-        } else {
-            [self _handleSecondHalfLongPressTimer:nil];
-        }
-    }
+    [self _handleSecondHalfLongPressTimer:nil];
 }
 %new
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
@@ -58,15 +49,11 @@ SBIconView *currentlyHighlightedIcon;
     
     return YES;
 }
-- (void)_handleSecondHalfLongPressTimer:(id)timer {
-    %orig;
-}
-- (void)_handleFirstHalfLongPressTimer:(id)timer{
-    if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] && swapInvokeMethods && timer != nil){
 
+- (void)_handleFirstHalfLongPressTimer:(id)timer{
+    if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] && timer != nil){
         [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
         [self cancelLongPressTimer];
-        hapticFeedback();
         
         return;
     }
@@ -92,20 +79,21 @@ SBIconView *currentlyHighlightedIcon;
 
 %hook UIScreen
 - (int)_forceTouchCapability {
-    return 1;
+    return 2;
 }
 %end
 %hook UITraitCollection
 - (int)forceTouchCapability {
-    return 1;
+    return 2;
 }
 %end
-%hook UIDevice
-- (BOOL)_supportsForceTouch {
-    return YES;
-}
-- (BOOL)_supportsHapticFeedback {
-    return YES;
+
+%hook SBIconController
+- (void)_revealMenuForIconView:(SBIconView *)iconView presentImmediately:(BOOL)imm {
+    if(hapticFeedbackIsEnabled){
+        hapticFeedback();
+    }
+    %orig(iconView, YES);
 }
 %end
 
