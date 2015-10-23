@@ -51,7 +51,7 @@ SBIconView *currentlyHighlightedIcon;
     swipeUp.delegate = (id <UIGestureRecognizerDelegate>)ico;
     [ico addGestureRecognizer:swipeUp];
 
-    return %orig;
+    return ico;
 }
 
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
