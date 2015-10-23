@@ -1,5 +1,6 @@
 #import "Forcy.h"
 
+
 static void loadPreferences() {
     preferences = [[NSUserDefaults alloc] initWithSuiteName:@"com.strayadevteam.forcyprefs"];
 
@@ -39,15 +40,16 @@ SBIconView *currentlyHighlightedIcon;
 %hook SBIconView 
 
 - (id)initWithContentType:(unsigned long long)arg1 {
-    //im trying mum
+    SBIconView *ico = %orig();
+    //im trying mum - i did it you proud?
     if([preferences objectForKey:@"invokeMethods"] == 0){
-    self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
-    self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
-}
-    UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
+        ico.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
+        ico.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
+    }
+    UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:ico action:@selector(fc_swiped:)] autorelease];
     swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
-    swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
-    [self addGestureRecognizer:swipeUp];
+    swipeUp.delegate = (id <UIGestureRecognizerDelegate>)ico;
+    [ico addGestureRecognizer:swipeUp];
 
     return %orig;
 }
@@ -55,8 +57,8 @@ SBIconView *currentlyHighlightedIcon;
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
     [self _handleSecondHalfLongPressTimer:nil];
 }
-%new
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+
+%new - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] 
                         && ![[%c(SBIconController) sharedInstance] _canRevealShortcutMenu])
         return NO;
@@ -96,11 +98,19 @@ SBIconView *currentlyHighlightedIcon;
     return 2;
 }
 %end
+
 %hook UITraitCollection
 - (int)forceTouchCapability {
     return 2;
 }
 %end
+
+%hook UIDevice
+- (BOOL)_supportsForceTouch {
+    return TRUE;
+}
+%end
+
 
 %hook SBIconController
 - (void)_revealMenuForIconView:(SBIconView *)iconView presentImmediately:(BOOL)imm {
