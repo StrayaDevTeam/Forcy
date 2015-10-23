@@ -9,7 +9,8 @@ static void loadPreferences() {
         @"removeBackgroundBlur": @NO,
         @"preferForceTouch": @NO,
         @"shortHoldTime": [NSNumber numberWithFloat:0.325],
-        @"vibrationTime": [NSNumber numberWithFloat:50]
+        @"vibrationTime": [NSNumber numberWithFloat:50],
+        @"invokeMethods": [NSNumber numberWithInteger:0]
     }];
 
     enabled = [preferences boolForKey:@"enabled"];
@@ -18,12 +19,13 @@ static void loadPreferences() {
     preferForceTouch = [preferences boolForKey:@"preferForceTouch"];
     shortHoldTime = [preferences floatForKey:@"shortHoldTime"];
     vibrationTime = [preferences floatForKey:@"vibrationTime"];
+    invokeMethods = [preferences integerForKey:@"invokeMethods"];
 }
 
 void hapticFeedback(){
     if(hapticFeedbackIsEnabled){
         NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-        NSMutableArray* arr = [NSMutableArray array ];
+        NSMutableArray* arr = [NSMutableArray array];
         [arr addObject:[NSNumber numberWithBool:YES]];
         [arr addObject:[NSNumber numberWithInt:vibrationTime]]; //vibrate for 50ms
         [dict setObject:arr forKey:@"VibePattern"];
@@ -36,16 +38,18 @@ SBIconView *currentlyHighlightedIcon;
 
 %hook SBIconView 
 
--(void)setLocation:(int)arg1 {
+- (id)initWithContentType:(unsigned long long)arg1 {
+    //im trying mum
+    if([preferences objectForKey:@"invokeMethods"] == 0){
     self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
     self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
-
+}
     UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
     swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
     swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
     [self addGestureRecognizer:swipeUp];
 
-    %orig;
+    return %orig;
 }
 
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
