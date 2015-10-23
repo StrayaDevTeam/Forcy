@@ -1,9 +1,11 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioServices.h>
 #import <UIKit/UIView.h>
+#import "substrate.h"
 
 extern "C" void AudioServicesPlaySystemSoundWithVibration(SystemSoundID inSystemSoundID, id unknown, NSDictionary *options);
 
+NSUserDefaults *preferences;
 bool enabled;
 bool hapticFeedbackIsEnabled;
 bool swapInvokeMethods;
