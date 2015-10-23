@@ -40,18 +40,17 @@ SBIconView *currentlyHighlightedIcon;
 %hook SBIconView 
 
 - (id)initWithContentType:(unsigned long long)arg1 {
-    SBIconView *ico = %orig();
     //im trying mum - i did it you proud?
     if([preferences objectForKey:@"invokeMethods"] == 0){
-        ico.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
-        ico.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
+        self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
+        self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
     }
-    UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:ico action:@selector(fc_swiped:)] autorelease];
+    UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
     swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
-    swipeUp.delegate = (id <UIGestureRecognizerDelegate>)ico;
-    [ico addGestureRecognizer:swipeUp];
+    swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
+    [self addGestureRecognizer:swipeUp];
 
-    return ico;
+    return %orig;
 }
 
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
