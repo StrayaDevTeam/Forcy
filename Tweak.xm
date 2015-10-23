@@ -6,6 +6,7 @@ static void loadPreferences() {
     enabled = !CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     hapticFeedbackIsEnabled = !CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("hapticFeedbackIsEnabled"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     removeBackgroundBlur = !CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("removeBackgroundBlur"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
+    preferForceTouch = !CFPreferencesCopyAppValue(CFSTR("preferForceTouch"), CFSTR("com.strayadevteam.forcyprefs")) ? NO : [(id)CFPreferencesCopyAppValue(CFSTR("preferForceTouch"), CFSTR("com.strayadevteam.forcyprefs")) boolValue];
     shortHoldTime = !CFPreferencesCopyAppValue(CFSTR("shortHoldTime"), CFSTR("com.strayadevteam.forcyprefs")) ? 0.325f : [(id)CFPreferencesCopyAppValue(CFSTR("shortHoldTime"), CFSTR("com.strayadevteam.forcyprefs")) floatValue];
     vibrationTime = !CFPreferencesCopyAppValue(CFSTR("vibrationTime"), CFSTR("com.strayadevteam.forcyprefs")) ? 50 : [(id)CFPreferencesCopyAppValue(CFSTR("vibrationTime"), CFSTR("com.strayadevteam.forcyprefs")) intValue];
 }

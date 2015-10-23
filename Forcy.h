@@ -8,6 +8,7 @@ bool enabled;
 bool hapticFeedbackIsEnabled;
 bool swapInvokeMethods;
 bool removeBackgroundBlur;
+bool preferForceTouch;
 CGFloat shortHoldTime;
 int vibrationTime;
 
