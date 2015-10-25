@@ -41,7 +41,7 @@ SBIconView *currentlyHighlightedIcon;
 
 - (id)initWithContentType:(unsigned long long)arg1 {
     //im trying mum - i did it you proud?
-    if([preferences objectForKey:@"invokeMethods"] == 0){
+    if(invokeMethods == 0){
         self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
         self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
     }
@@ -67,6 +67,7 @@ SBIconView *currentlyHighlightedIcon;
 
 - (void)_handleFirstHalfLongPressTimer:(id)timer{
     if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] && timer != nil){
+        
         [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
         [self cancelLongPressTimer];
         
