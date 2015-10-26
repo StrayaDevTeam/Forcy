@@ -38,19 +38,18 @@ SBIconView *currentlyHighlightedIcon;
 
 %hook SBIconView 
 
+UISwipeGestureRecognizer *swipeUp;
 - (void)setLocation:(id)arg1 {
     //im trying mum - i did it you proud?
-    if(invokeMethods == 0){
-        NSLog(@"invokeMethods == 0");
-        self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
-        self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
-    } else if(invokeMethods == 1){
-        NSLog(@"invokeMethods == 1");
-        UISwipeGestureRecognizer *swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
+        if(invokeMethods == 0){
+            self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
+            self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
+}
+        //NSLog(@"invokeMethods == 1");
+        swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
         swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
         swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
         [self addGestureRecognizer:swipeUp];
-    }
 
     return %orig;
 }
@@ -58,7 +57,7 @@ SBIconView *currentlyHighlightedIcon;
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
     if(invokeMethods == 0){
         [[%c(SBIconController) sharedInstance] setIsEditing:YES];
-        //[self _handleSecondHalfLongPressTimer:nil];
+        [self _handleSecondHalfLongPressTimer:nil];
     } else if (invokeMethods == 1){
         [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
         [self cancelLongPressTimer];
@@ -75,10 +74,13 @@ SBIconView *currentlyHighlightedIcon;
 
 - (void)_handleFirstHalfLongPressTimer:(id)timer{
     if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] && timer != nil){
-        //if(invokeMethods == 0){
+        if(invokeMethods == 0){
             [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
             [self cancelLongPressTimer];
-        //}
+        } else if (invokeMethods == 1){
+        [[%c(SBIconController) sharedInstance] setIsEditing:YES];
+        [self _handleSecondHalfLongPressTimer:nil];
+        }
     }
     %orig;
 }
