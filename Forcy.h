@@ -13,6 +13,22 @@ bool preferForceTouch;
 CGFloat shortHoldTime;
 int vibrationTime;
 NSInteger invokeMethods;
+bool HardPress;
+bool FirstPress;
+CGFloat lightPress;
+NSInteger kForceSensitivity = 43;
+
+@interface _UITouchForceMessage : NSObject
+@property (nonatomic) double timestamp;
+@property (nonatomic) float unclampedTouchForce;
+- (void)setUnclampedTouchForce:(float)touchForce;
+- (float)unclampedTouchForce;
+@end
+@interface UITouch (Private)
+- (void)_setPressure:(float)arg1 resetPrevious:(BOOL)arg2;
+- (float)_pathMajorRadius;
+- (float)majorRadius;
+@end
 
 @interface _UIBackdropView : UIView
 @end

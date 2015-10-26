@@ -1,47 +1,5 @@
 #import "Forcy.h"
 
-@interface _UITouchForceMessage : NSObject
-@property (nonatomic) double timestamp;
-@property (nonatomic) float unclampedTouchForce;
-- (void)setUnclampedTouchForce:(float)touchForce;
-- (float)unclampedTouchForce;
-@end
-@interface UITouch (Private)
-- (void)_setPressure:(float)arg1 resetPrevious:(BOOL)arg2;
-- (float)_pathMajorRadius;
-- (float)majorRadius;
-@end
-static BOOL HardPress;
-static BOOL FirstPress;
-static float lightPress;
-static NSInteger kForceSensitivity = 43;
-%hook _UITouchForceMessage
-- (void)setUnclampedTouchForce:(CGFloat)touchForce {
-    if (HardPress) {
-        %orig((int) 200);
-    } else {
-        %orig((int) 20);
-    }
-}
-%end
-%hook UITouch
-- (void)setMajorRadius:(float)arg1 {
-    if (!FirstPress) {
-        lightPress = kForceSensitivity;
-        if (lightPress >= 15) {
-        FirstPress = YES;
-    }
-    }
-    if ([self _pathMajorRadius] > lightPress) {
-        HardPress = YES;
-    }
-    else {
-        HardPress = NO;
-    }
-    %orig;
-}
-%end
-
 static void loadPreferences() {
     preferences = [[NSUserDefaults alloc] initWithSuiteName:@"com.strayadevteam.forcyprefs"];
 
@@ -184,6 +142,33 @@ UITapGestureRecognizer *doubleTap;
     }
     %orig(iconView, YES);
 }
+%end
+
+%hook _UITouchForceMessage
+- (void)setUnclampedTouchForce:(CGFloat)touchForce {
+    if (HardPress) {
+        %orig((int) 200);
+        } else {
+            %orig((int) 20);
+        }
+    }
+    %end
+%hook UITouch
+    - (void)setMajorRadius:(float)arg1 {
+        if (!FirstPress) {
+            lightPress = kForceSensitivity;
+            if (lightPress >= 15) {
+                FirstPress = YES;
+            }
+        }
+        if ([self _pathMajorRadius] > lightPress) {
+            HardPress = YES;
+        }
+        else {
+            HardPress = NO;
+        }
+        %orig;
+    }
 %end
 
 %ctor{
