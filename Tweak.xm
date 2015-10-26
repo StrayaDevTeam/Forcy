@@ -1,5 +1,7 @@
 #import "Forcy.h"
 
+
+
 static void loadPreferences() {
     preferences = [[NSUserDefaults alloc] initWithSuiteName:@"com.strayadevteam.forcyprefs"];
 
@@ -39,12 +41,18 @@ SBIconView *currentlyHighlightedIcon;
 %hook SBIconView 
 
 UISwipeGestureRecognizer *swipeUp;
+UITapGestureRecognizer *doubleTap;
 - (void)setLocation:(id)arg1 {
     //im trying mum - i did it you proud?
         if(invokeMethods == 0){
             self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
             self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
-}
+        } else if(invokeMethods == 2){
+            doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fc_handleDoubleTapGesture:)];
+            doubleTap.numberOfTapsRequired = 2;
+            [self addGestureRecognizer:doubleTap];
+            [doubleTap release];
+        }
         //NSLog(@"invokeMethods == 1");
         swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
         swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
@@ -52,6 +60,13 @@ UISwipeGestureRecognizer *swipeUp;
         [self addGestureRecognizer:swipeUp];
 
     return %orig;
+}
+
+%new -(void)fc_handleDoubleTapGesture:(UITapGestureRecognizer *)gesture{
+    if(gesture.state == UIGestureRecognizerStateRecognized){
+            [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
+            [self cancelLongPressTimer];
+    }
 }
 
 %new - (void)fc_swiped:(UISwipeGestureRecognizer *)gesture {
@@ -78,8 +93,10 @@ UISwipeGestureRecognizer *swipeUp;
             [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
             [self cancelLongPressTimer];
         } else if (invokeMethods == 1){
-        [[%c(SBIconController) sharedInstance] setIsEditing:YES];
-        [self _handleSecondHalfLongPressTimer:nil];
+            [[%c(SBIconController) sharedInstance] setIsEditing:YES];
+            [self _handleSecondHalfLongPressTimer:nil];
+        } else if (invokeMethods == 2){
+
         }
     }
     %orig;
