@@ -157,25 +157,25 @@ UITapGestureRecognizer *doubleTap;
     }
 %end
 %hook UITouch
-    - (void)setMajorRadius:(float)arg1 {
-        if (!FirstPress) {
-            lightPress = kForceSensitivity;
-            if (lightPress >= 15) {
-                FirstPress = YES;
-                NSLog(@"FIRST PRESS FUCK");
-                //hapticFeedback();
-            }
-        }
-        if ([self _pathMajorRadius] > lightPress) {
-            HardPress = YES;
-            NSLog(@"HARD PRESS FUCK");
+- (void)setMajorRadiusTolerance:(float)arg1 {
+    if (!FirstPress) {
+        lightPress = kForceSensitivity;
+        if (lightPress >= 15) {
+            FirstPress = YES;
+            NSLog(@"FIRST PRESS FUCK");
             //hapticFeedback();
         }
-        else {
-            HardPress = NO;
-            NSLog(@"NO HARD PRESS FUCK");
-        }
-        %orig;
+    }
+    if ([self _pathMajorRadius] > lightPress) {
+        HardPress = YES;
+        NSLog(@"HARD PRESS FUCK");
+        //hapticFeedback();
+    }
+    else {
+        HardPress = NO;
+        NSLog(@"NO HARD PRESS FUCK");
+    }
+    %orig;
 }
 
 %new +(id)sharedInstance {
