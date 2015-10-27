@@ -28,6 +28,7 @@ NSInteger kForceSensitivity = 43;
 - (void)_setPressure:(float)arg1 resetPrevious:(BOOL)arg2;
 - (float)_pathMajorRadius;
 - (float)majorRadius;
++ (id)sharedInstance;
 @end
 
 @interface _UIBackdropView : UIView

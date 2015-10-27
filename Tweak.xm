@@ -40,6 +40,7 @@ SBIconView *currentlyHighlightedIcon;
 
 UISwipeGestureRecognizer *swipeUp;
 UITapGestureRecognizer *doubleTap;
+
 - (void)setLocation:(id)arg1 {
     //im trying mum - i did it you proud?
         if(invokeMethods == 0){
@@ -148,27 +149,43 @@ UITapGestureRecognizer *doubleTap;
 - (void)setUnclampedTouchForce:(CGFloat)touchForce {
     if (HardPress) {
         %orig((int) 200);
+        //hapticFeedback();
         } else {
             %orig((int) 20);
+        //hapticFeedback();
         }
     }
-    %end
+%end
 %hook UITouch
     - (void)setMajorRadius:(float)arg1 {
         if (!FirstPress) {
             lightPress = kForceSensitivity;
             if (lightPress >= 15) {
                 FirstPress = YES;
+                NSLog(@"FIRST PRESS FUCK");
+                //hapticFeedback();
             }
         }
         if ([self _pathMajorRadius] > lightPress) {
             HardPress = YES;
+            NSLog(@"HARD PRESS FUCK");
+            //hapticFeedback();
         }
         else {
             HardPress = NO;
+            NSLog(@"NO HARD PRESS FUCK");
         }
         %orig;
-    }
+}
+
+%new +(id)sharedInstance {
+    static id sharedInstance = nil;
+    static dispatch_once_t token = 0;
+    dispatch_once(&token, ^{
+        sharedInstance = [self new];
+    });
+    return sharedInstance;
+}
 %end
 
 %ctor{
