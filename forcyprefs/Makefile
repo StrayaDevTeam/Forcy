@@ -1,7 +1,7 @@
 ARCHS = armv7 arm64
 TARGET = iphone:clang:latest:latest
 
-include theos/makefiles/common.mk
+include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = ForcyPrefs
 ForcyPrefs_FILES = $(wildcard *.mm)
