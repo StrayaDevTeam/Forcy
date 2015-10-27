@@ -60,7 +60,7 @@
 			<key>label</key>
 			<string>Invoke Methods</string>
 			<key>default</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>validTitles</key>
 			<array>
 				<string>Hold</string>
