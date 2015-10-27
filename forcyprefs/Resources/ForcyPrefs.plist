@@ -44,10 +44,12 @@
 			<key>PostNotification</key>
 			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
 		</dict>
-				<dict>
+        		<dict>
             <key>cell</key>
             <string>PSGroupCell</string>
-        </dict>  
+            <key>footerText</key>
+            <string>For now, respring to fully apply changes. Will be fixed in a later beta.</string>
+        </dict>     
 		<dict>
 			<key>cell</key>
 			<string>PSLinkListCell</string>

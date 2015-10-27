@@ -16,7 +16,7 @@ NSInteger invokeMethods;
 bool HardPress;
 bool FirstPress;
 CGFloat lightPress;
-NSInteger kForceSensitivity = 43;
+NSInteger kForceSensitivity = 20;
 
 @interface _UITouchForceMessage : NSObject
 @property (nonatomic) double timestamp;

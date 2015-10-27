@@ -156,7 +156,7 @@ UITapGestureRecognizer *doubleTap;
         }
     }
 %end
-%hook UITouch
+%hook UITouch/*
 - (void)setMajorRadiusTolerance:(float)arg1 {
     if (!FirstPress) {
         lightPress = kForceSensitivity;
@@ -176,7 +176,30 @@ UITapGestureRecognizer *doubleTap;
         NSLog(@"NO HARD PRESS FUCK");
     }
     %orig;
+}*/
+- (void)setMajorRadius:(float)arg1 {
+    // NSLog(@"View: %@", self.view.gestureRecognizers);
+    if (![self.view isKindOfClass:[NSClassFromString(@"SBIconView") class]]) {
+    if (!FirstPress) {
+        lightPress = kForceSensitivity;
+        if (lightPress >= 15) {
+        FirstPress = YES;
+    }
+    }
+    if ([self _pathMajorRadius] > lightPress) {
+        HardPress = 2;
 }
+    if ([self _pathMajorRadius] > lightPress + lightPress /2) {
+        HardPress = 3;
+        
+    }
+    if ([self _pathMajorRadius] < lightPress) {
+        HardPress = 1;
+        }
+    %orig;
+}
+}
+
 
 %new +(id)sharedInstance {
     static id sharedInstance = nil;
