@@ -15,6 +15,7 @@ int vibrationTime;
 NSInteger invokeMethods;
 bool HardPress;
 bool FirstPress;
+bool menuEnabled;
 CGFloat lightPress;
 NSInteger kForceSensitivity = 20;
 

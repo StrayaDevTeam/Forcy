@@ -10,7 +10,8 @@ static void loadPreferences() {
         @"preferForceTouch": @NO,
         @"shortHoldTime": [NSNumber numberWithFloat:0.325],
         @"vibrationTime": [NSNumber numberWithFloat:50],
-        @"invokeMethods": [NSNumber numberWithInteger:0]
+        @"invokeMethods": [NSNumber numberWithInteger:0],
+        @"menuEnabled": @YES
     }];
 
     enabled = [preferences boolForKey:@"enabled"];
@@ -20,6 +21,7 @@ static void loadPreferences() {
     shortHoldTime = [preferences floatForKey:@"shortHoldTime"];
     vibrationTime = [preferences floatForKey:@"vibrationTime"];
     invokeMethods = [preferences integerForKey:@"invokeMethods"];
+    menuEnabled = [preferences boolForKey:@"menuEnabled"];
 }
 
 void hapticFeedback(){
@@ -43,6 +45,9 @@ UITapGestureRecognizer *doubleTap;
 
 - (void)setLocation:(id)arg1 {
     //im trying mum - i did it you proud?
+
+    //HBLogInfo(@"setLoaction:arg1 = %@", arg1);
+    if(menuEnabled){
         if(invokeMethods == 0){
             self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
             self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
@@ -57,7 +62,7 @@ UITapGestureRecognizer *doubleTap;
         swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
         swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
         [self addGestureRecognizer:swipeUp];
-
+    }
     return %orig;
 }
 

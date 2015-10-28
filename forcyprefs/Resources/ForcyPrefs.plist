@@ -25,127 +25,14 @@
 			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
 		</dict>
 		<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-            <key>footerText</key>
-            <string>Gives a short vibration when enabled. Make sure 'Vibrate on Silent' is enabled in Settings under Sound.</string>
-        </dict>
-		<dict>
 			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>com.strayadevteam.forcyprefs</string>
-			<key>key</key>
-			<string>hapticFeedbackIsEnabled</string>
-			<key>label</key>
-			<string>Haptic Feedback</string>
-			<key>PostNotification</key>
-			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
-		</dict>
-        		<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-            <key>footerText</key>
-            <string>For now, respring to fully apply changes. Will be fixed in a later beta.</string>
-        </dict>     
-		<dict>
-			<key>cell</key>
-			<string>PSLinkListCell</string>
+			<string>PSLinkCell</string>
 			<key>detail</key>
-			<string>PSListItemsController</string>
-			<key>defaults</key>
-			<string>com.strayadevteam.forcyprefs</string>
-			<key>key</key>
-			<string>invokeMethods</string>
+			<string>Forcy3DMenuPrefs</string>
 			<key>label</key>
-			<string>Invoke Methods</string>
-			<key>default</key>
-			<integer>0</integer>
-			<key>validTitles</key>
-			<array>
-				<string>Hold</string>
-				<string>Swipe Up</string>
-				<string>Double Tap</string>
-				<string>Fake Force Touch</string>
-			</array>
-			<key>validValues</key>
-			<array>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>3</integer>
-			</array>
-			<key>PostNotification</key>
-			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
+			<string>3D Touch Menus</string>
 		</dict>
-		<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-        </dict>        
-				<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<false/>
-			<key>defaults</key>
-			<string>com.strayadevteam.forcyprefs</string>
-			<key>key</key>
-			<string>removeBackgroundBlur</string>
-			<key>label</key>
-			<string>Remove Background Blur</string>
-			<key>PostNotification</key>
-			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
-		</dict>
-				<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-            <key>footerText</key>
-            <string>Please use a value between 0.0 and 1.0. Any value over 1.0 will not work. Default value is 0.325</string>
-        </dict>    
-		<dict>
-			<key>cell</key>
-			<string>PSEditTextCell</string>
-			<key>placeholder</key>
-			<string>Time (s)</string>
-			<key>defaults</key>
-			<string>com.strayadevteam.forcyprefs</string>
-			<key>PostNotification</key>
-			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
-			<key>isDecimalPad</key>
-			<true/>
-			<key>default</key>
-			<string>0.325</string>
-			<key>key</key>
-			<string>shortHoldTime</string>
-			<key>label</key>
-			<string>Time to Invoke Menu (s)</string>
-		</dict>
-        		<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-            <key>footerText</key>
-            <string>Recommeneded times are between 50ms and 100ms. Default is 50ms.</string>
-        </dict>       
-		<dict>
-			<key>cell</key>
-			<string>PSEditTextCell</string>
-			<key>placeholder</key>
-			<string>Vibration time (ms)</string>
-			<key>defaults</key>
-			<string>com.strayadevteam.forcyprefs</string>
-			<key>PostNotification</key>
-			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
-			<key>isNumeric</key>
-			<true/>
-			<key>default</key>
-			<string>50</string>
-			<key>key</key>
-			<string>vibrationTime</string>
-			<key>label</key>
-			<string>Vibration (ms)</string>
-		</dict>
+		
 	</array>
 	<key>title</key>
 	<string>Forcy</string>
