@@ -116,7 +116,17 @@
 			<key>label</key>
 			<string>Time to Invoke Menu (s)</string>
 		</dict>
-        		<dict>
+		<dict>
+            <key>cell</key>
+            <string>PSButtonCell</string>
+            <key>action</key>
+            <string>dismissKeyboard</string>
+            <key>alignment</key>
+            <string>center</string>
+            <key>label</key>
+            <string>Save</string>
+        </dict>
+        <dict>
             <key>cell</key>
             <string>PSGroupCell</string>
             <key>footerText</key>
@@ -140,6 +150,16 @@
 			<key>label</key>
 			<string>Vibration (ms)</string>
 		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSButtonCell</string>
+            <key>action</key>
+            <string>dismissKeyboard</string>
+            <key>alignment</key>
+            <string>center</string>
+            <key>label</key>
+            <string>Save</string>
+        </dict>
 	</array>
 	<key>title</key>
 	<string>Forcy</string>

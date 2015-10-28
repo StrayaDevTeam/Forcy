@@ -11,6 +11,11 @@
 	}
 	return _specifiers;
 }
+
+- (void)dismissKeyboard {
+	[self.view endEditing:YES];
+}
+
 @end
 
 // vim:ft=objc

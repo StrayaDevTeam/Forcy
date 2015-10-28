@@ -1,3 +1,6 @@
+THEOS_DEVICE_IP = localhost
+THEOS_DEVICE_PORT = 2222
+
 ARCHS = armv7 arm64
 TARGET = iphone:clang:latest:latest
 THEOS_BUILD_DIR = Packages
