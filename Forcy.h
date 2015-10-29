@@ -47,6 +47,10 @@ NSInteger kForceSensitivity = 20;
 
 @end
 
+@interface UIApplicationShortcutIcon (Private)
+- (id)sbsShortcutIcon;
+@end
+
 @interface SBSApplicationShortcutIcon
 @end
 
