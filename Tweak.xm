@@ -220,11 +220,11 @@ UITapGestureRecognizer *doubleTap;
 
 -(void)applicationDidFinishLaunchingWithOptions:(id)arg1 {
     %orig();
-    SBApplicationController *app = [[SBApplicationController sharedInstance] applicationWithBundleIdentifier:@"com.apple.mobileslideshow"];
-    SBSApplicationShortcutItem *item = [SBSApplicationShortcutItem alloc];
-    g.localizedTitle = @"Search";
-    g.type = @"com.apple.photos.shortcuts.search";
-    app.staticShortcutItems = [NSArray initWithObjects:g, nil];
+    SBApplication *app = [[%c(SBApplicationController) sharedInstance] applicationWithBundleIdentifier:@"com.apple.mobileslideshow"];
+    SBSApplicationShortcutItem *item = [%c(SBSApplicationShortcutItem) alloc];
+    item.localizedTitle = @"Search";
+    item.type = @"com.apple.photos.shortcuts.search";
+    app.staticShortcutItems = [[NSArray alloc] initWithObjects:item, nil];
 }
 
 %end

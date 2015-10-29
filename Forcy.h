@@ -47,6 +47,9 @@ NSInteger kForceSensitivity = 20;
 
 @end
 
+@interface SBSApplicationShortcutIcon
+@end
+
 @interface SBSApplicationShortcutItem : NSObject
 @property (nonatomic, copy) SBSApplicationShortcutIcon *icon;
 @property (nonatomic, copy) NSString *localizedSubtitle;
