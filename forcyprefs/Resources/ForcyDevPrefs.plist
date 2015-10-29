@@ -17,15 +17,15 @@
 			<key>cellClass</key>
 			<string>ForcyDevCell</string>
 			<key>devName</key>
-			<string>Thomas Greenwood</string>
+			<string>George Dan</string>
 			<key>devTwitter</key>
-			<string>@GreenyDev</string>
+			<string>@theninjaprawn</string>
 			<key>jobSub</key>
 			<string>Head Bitch</string>
 			<key>icon</key>
-			<string>Greeny.png</string>
+			<string>George.png</string>
 			<key>action</key>
-			<string>openGreenyTwitter</string>
+			<string>openGeorgeTwitter</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -39,11 +39,47 @@
 			<key>devTwitter</key>
 			<string>@GreenyDev</string>
 			<key>jobSub</key>
-			<string>Head Bitch</string>
+			<string>Most Commits</string>
 			<key>icon</key>
 			<string>Greeny.png</string>
 			<key>action</key>
 			<string>openGreenyTwitter</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>height</key>
+			<string>100</string>
+			<key>cellClass</key>
+			<string>ForcyDevCell</string>
+			<key>devName</key>
+			<string>Evan Petousis</string>
+			<key>devTwitter</key>
+			<string>@evilgoldfish01</string>
+			<key>jobSub</key>
+			<string>Fixes Stuff</string>
+			<key>icon</key>
+			<string>Evan.png</string>
+			<key>action</key>
+			<string>openEvanTwitter</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>height</key>
+			<string>100</string>
+			<key>cellClass</key>
+			<string>ForcyDevCell</string>
+			<key>devName</key>
+			<string>Hayden Hunter</string>
+			<key>devTwitter</key>
+			<string>@HHunterDev</string>
+			<key>jobSub</key>
+			<string>Done Some Preferences Shit</string>
+			<key>icon</key>
+			<string>Hayden.png</string>
+			<key>action</key>
+			<string>openHaydenTwitter</string>
 		</dict>
 	</array>
 	<key>title</key>
