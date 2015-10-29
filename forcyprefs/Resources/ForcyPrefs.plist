@@ -32,6 +32,18 @@
 			<key>label</key>
 			<string>3D Touch Menus</string>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>detail</key>
+			<string>ForcyDevPrefs</string>
+			<key>label</key>
+			<string>Meet The Team</string>
+		</dict>
 	</array>
 	<key>title</key>
 	<string>Forcy</string>
