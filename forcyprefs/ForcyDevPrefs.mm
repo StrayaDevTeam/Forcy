@@ -94,7 +94,7 @@
 @interface ForcyDevCell : PSTableCell {
     UIImageView *_background;
     UILabel *devName;
-    UILabel *devRealName;
+    UILabel *devTwitter;
     UILabel *jobSub;
     UIImage *iconImage;
 }
@@ -120,13 +120,13 @@
 
         [self addSubview:devName];
 
-        devRealName = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 30, frame.size.width, frame.size.height)];
-        [devRealName setText:properties[@"devRealName"]];
-        [devRealName setTextColor:[UIColor grayColor]];
-        [devRealName setBackgroundColor:[UIColor clearColor]];
-        [devRealName setFont:[UIFont fontWithName:@"Helvetica Light" size:15]];
+        devTwitter = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 30, frame.size.width, frame.size.height)];
+        [devTwitter setText:properties[@"devTwitter"]];
+        [devTwitter setTextColor:[UIColor grayColor]];
+        [devTwitter setBackgroundColor:[UIColor clearColor]];
+        [devTwitter setFont:[UIFont fontWithName:@"Helvetica Light" size:15]];
 
-        [self addSubview:devRealName];
+        [self addSubview:devTwitter];
 
         jobSub = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 50, frame.size.width, frame.size.height)];
         [jobSub setText:properties[@"jobSub"]];

@@ -18,7 +18,25 @@
 			<string>ForcyDevCell</string>
 			<key>devName</key>
 			<string>Thomas Greenwood</string>
-			<key>devRealName</key>
+			<key>devTwitter</key>
+			<string>@GreenyDev</string>
+			<key>jobSub</key>
+			<string>Head Bitch</string>
+			<key>icon</key>
+			<string>Greeny.png</string>
+			<key>action</key>
+			<string>openGreenyTwitter</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>height</key>
+			<string>100</string>
+			<key>cellClass</key>
+			<string>ForcyDevCell</string>
+			<key>devName</key>
+			<string>Thomas Greenwood</string>
+			<key>devTwitter</key>
 			<string>@GreenyDev</string>
 			<key>jobSub</key>
 			<string>Head Bitch</string>
