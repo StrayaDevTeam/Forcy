@@ -274,10 +274,17 @@ UITapGestureRecognizer *doubleTap;
     mapsSearch.type = @"com.apple.Maps.search-nearby";
     mapsSearch.icon = [mapsSearchIcon sbsShortcutIcon];
 
-    mapsApp.staticShortcutItems = [[NSArray alloc] initWithObjects:mapsHome, mapsMarkLocation, mapsShareLocation, mapsSearch, nil];
-    
+    mapsApp.staticShortcutItems = [[NSArray alloc] initWithObjects:mapsHome, mapsMarkLocation, mapsShareLocation, mapsSearch, nil];   
 }
+%end
 
+%hook TFNTwitterDeviceFeatureSwitches
++ (_Bool)isNewMessageShortcutEnabled {
+    return YES;
+}
++ (_Bool)areApplicationShortcutsEnabled {
+    return YES;
+}
 %end
 
 %ctor{

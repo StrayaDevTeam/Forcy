@@ -3,6 +3,8 @@
 		Bundles = (
 			"com.apple.UIKit",
 			"com.apple.springboard",
+			"com.atebits.Tweetie2",
+			"com.toyopagroup.picaboo",
 		);
 	};
 }
