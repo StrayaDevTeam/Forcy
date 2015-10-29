@@ -218,7 +218,7 @@ UITapGestureRecognizer *doubleTap;
 
 %hook SpringBoard
 
--(void)applicationDidFinishLaunchingWithOptions:(id)arg1 {
+-(void)applicationDidFinishLaunching:(id)application {
     %orig();
     SBApplication *app = [[%c(SBApplicationController) sharedInstance] applicationWithBundleIdentifier:@"com.apple.mobileslideshow"];
     SBSApplicationShortcutItem *item = [%c(SBSApplicationShortcutItem) alloc];
