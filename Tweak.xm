@@ -216,6 +216,19 @@ UITapGestureRecognizer *doubleTap;
 }
 %end
 
+%hook SpringBoard
+
+-(void)applicationDidFinishLaunchingWithOptions:(id)arg1 {
+    %orig();
+    SBApplicationController *app = [[SBApplicationController sharedInstance] applicationWithBundleIdentifier:@"com.apple.mobileslideshow"];
+    SBSApplicationShortcutItem *item = [SBSApplicationShortcutItem alloc];
+    g.localizedTitle = @"Search";
+    g.type = @"com.apple.photos.shortcuts.search";
+    app.staticShortcutItems = [NSArray initWithObjects:g, nil];
+}
+
+%end
+
 %ctor{
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
                                 NULL,
