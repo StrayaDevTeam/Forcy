@@ -11,9 +11,10 @@ static void loadPreferences() {
         @"shortHoldTime": [NSNumber numberWithFloat:0.325],
         @"vibrationTime": [NSNumber numberWithFloat:50],
         @"invokeMethods": [NSNumber numberWithInteger:0],
-        @"menuEnabled": @YES
+        @"menuEnabled": @YES,
+        @"peekAndPopSens": [NSNumber numberWithInteger:45]
     }];
-
+    
     enabled = [preferences boolForKey:@"enabled"];
     hapticFeedbackIsEnabled = [preferences boolForKey:@"hapticFeedbackIsEnabled"];
     removeBackgroundBlur = [preferences boolForKey:@"removeBackgroundBlur"];
@@ -22,6 +23,7 @@ static void loadPreferences() {
     vibrationTime = [preferences floatForKey:@"vibrationTime"];
     invokeMethods = [preferences integerForKey:@"invokeMethods"];
     menuEnabled = [preferences boolForKey:@"menuEnabled"];
+    peekAndPopSens = [preferences integerForKey:@"peekAndPopSens"];
 }
 
 void hapticFeedback(){
@@ -164,7 +166,7 @@ UITapGestureRecognizer *doubleTap;
 %hook UITouch/*
 - (void)setMajorRadiusTolerance:(float)arg1 {
     if (!FirstPress) {
-        lightPress = kForceSensitivity;
+        lightPress = peekAndPopSens;
         if (lightPress >= 15) {
             FirstPress = YES;
             NSLog(@"FIRST PRESS FUCK");
@@ -186,7 +188,7 @@ UITapGestureRecognizer *doubleTap;
     // NSLog(@"View: %@", self.view.gestureRecognizers);
     if (![self.view isKindOfClass:[NSClassFromString(@"SBIconView") class]]) {
     if (!FirstPress) {
-        lightPress = kForceSensitivity;
+        lightPress = peekAndPopSens;
         if (lightPress >= 15) {
         FirstPress = YES;
     }
@@ -277,6 +279,7 @@ UITapGestureRecognizer *doubleTap;
     mapsApp.staticShortcutItems = [[NSArray alloc] initWithObjects:mapsHome, mapsMarkLocation, mapsShareLocation, mapsSearch, nil];   
 
     SBApplication *snapchatApp = [[%c(SBApplicationController) sharedInstance] applicationWithBundleIdentifier:@"com.toyopagroup.picaboo"];
+
     UIApplicationShortcutIcon *snapchatAddFriendsIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"quickaction_addfriends"];
     UIApplicationShortcutIcon *snapchatChatIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"quickaction_chat"];
 

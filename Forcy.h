@@ -17,7 +17,7 @@ bool HardPress;
 bool FirstPress;
 bool menuEnabled;
 CGFloat lightPress;
-NSInteger kForceSensitivity = 20;
+NSInteger peekAndPopSens = 20;
 
 @interface _UITouchForceMessage : NSObject
 @property (nonatomic) double timestamp;

@@ -12,25 +12,23 @@
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>com.strayadevteam.forcyprefs</string>
-			<key>key</key>
-			<string>enabled</string>
-			<key>label</key>
-			<string>Enabled</string>
-			<key>PostNotification</key>
-			<string>com.strayadevteam.forcyprefs/prefsChanged</string>
-		</dict>
-		<dict>
-			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>detail</key>
 			<string>Forcy3DMenuPrefs</string>
 			<key>label</key>
 			<string>3D Touch Menus</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>detail</key>
+			<string>ForcyPeekAndPopPrefs</string>
+			<key>label</key>
+			<string>Peek and Pop</string>
 		</dict>
 		<dict>
 			<key>cell</key>
