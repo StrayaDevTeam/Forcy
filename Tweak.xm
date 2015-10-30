@@ -53,8 +53,13 @@ UITapGestureRecognizer *doubleTap;
     //HBLogInfo(@"setLoaction:arg1 = %@", arg1);
     if(menuEnabled){
         if(invokeMethods == 0){
-            self.shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
-            self.shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;
+            /*UILongPressGestureRecognizer *shortcutMenuPeekGesture = MSHookIvar<UILongPressGestureRecognizer *>(self, "_shortcutMenuPeekGesture");
+            shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
+            shortcutMenuPeekGesture.minimumPressDuration = shortHoldTime;*/
+            UILongPressGestureRecognizer *shortcutPeekGesture = MSHookIvar<UILongPressGestureRecognizer *>(self, "_shortcutMenuPeekGesture");
+            shortcutPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget: [%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
+            shortcutPeekGesture.minimumPressDuration = shortHoldTime;
+            [self addGestureRecognizer:shortcutPeekGesture];
         } else if(invokeMethods == 2){
             doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fc_handleDoubleTapGesture:)];
             doubleTap.numberOfTapsRequired = 2;
@@ -156,14 +161,16 @@ UITapGestureRecognizer *doubleTap;
 
 %hook _UITouchForceMessage
 - (void)setUnclampedTouchForce:(CGFloat)touchForce {
-    if (HardPress) {
-        %orig((int) 200);
-        //hapticFeedback();
+    if(peekAndPopEnabled){
+        if (HardPress) {
+            %orig((int) 200);
+            //hapticFeedback();
         } else {
             %orig((int) 20);
-        //hapticFeedback();
+            //hapticFeedback();
         }
     }
+}
 %end
 %hook UITouch/*
 - (void)setMajorRadiusTolerance:(float)arg1 {
@@ -187,27 +194,30 @@ UITapGestureRecognizer *doubleTap;
     %orig;
 }*/
 - (void)setMajorRadius:(float)arg1 {
+    if(peekAndPopEnabled){
     // NSLog(@"View: %@", self.view.gestureRecognizers);
-    if (![self.view isKindOfClass:[NSClassFromString(@"SBIconView") class]]) {
-    if (!FirstPress) {
-        lightPress = peekAndPopSens;
-        if (lightPress >= 15) {
-        FirstPress = YES;
-    }
-    }
-    if ([self _pathMajorRadius] > lightPress) {
-        HardPress = 2;
-}
-    if ([self _pathMajorRadius] > lightPress + lightPress /2) {
-        HardPress = 3;
-        
-    }
-    if ([self _pathMajorRadius] < lightPress) {
-        HardPress = 1;
+        if (![self.view isKindOfClass:[NSClassFromString(@"SBIconView") class]]) {
+            if (!FirstPress) {
+                lightPress = peekAndPopSens;
+                
+                if (lightPress >= 15) {
+                    FirstPress = YES;
+                }
+            }
+            if ([self _pathMajorRadius] > lightPress) {
+                HardPress = 2;
+            }
+            if ([self _pathMajorRadius] > lightPress + lightPress /2) {
+                HardPress = 3;
+            }
+            if ([self _pathMajorRadius] < lightPress) {
+                HardPress = 1;
+            }
         }
+    }
     %orig;
 }
-}
+
 
 
 %new +(id)sharedInstance {
