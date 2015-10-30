@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioServices.h>
 #import <UIKit/UIView.h>
+#import <Photos/Photos.h>
 #import "substrate.h"
 
 extern "C" void AudioServicesPlaySystemSoundWithVibration(SystemSoundID inSystemSoundID, id unknown, NSDictionary *options);
@@ -50,6 +51,7 @@ bool peekAndPopEnabled;
 
 @interface UIApplicationShortcutIcon (Private)
 - (id)sbsShortcutIcon;
++ (id)iconWithCustomImage:(id)arg1;
 @end
 
 @interface SBSApplicationShortcutIcon

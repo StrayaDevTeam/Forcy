@@ -13,7 +13,7 @@ static void loadPreferences() {
         @"invokeMethods": [NSNumber numberWithInteger:0],
         @"menuEnabled": @YES,
         @"peekAndPopSens": [NSNumber numberWithInteger:45],
-        @"peekAndPopEnabled" @YES
+        @"peekAndPopEnabled": @YES
     }];
     
     enabled = [preferences boolForKey:@"enabled"];
@@ -220,6 +220,27 @@ UITapGestureRecognizer *doubleTap;
 }
 %end
 
+UIImage *getLatestPhoto() {
+        PHImageManager *imgManager = [PHImageManager defaultManager];
+        PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+        requestOptions.synchronous = TRUE;
+
+        PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+        fetchOptions.sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending: TRUE], nil];
+        __block UIImage *finalImage = nil;
+
+        if ([PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions]) {
+            PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+            if (fetchResult.count > 0) {
+                [imgManager requestImageForAsset:[fetchResult objectAtIndex:(fetchResult.count-1)] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:requestOptions resultHandler:^(UIImage *result, NSDictionary *info){
+                        finalImage = result;
+                    }];
+            }
+        }
+
+        return finalImage;
+}
+
 %hook SpringBoard
 
 -(void)applicationDidFinishLaunching:(id)application {
@@ -246,6 +267,10 @@ UITapGestureRecognizer *doubleTap;
     photoYear.icon = [photosYearIcon sbsShortcutIcon];
 
     SBSApplicationShortcutItem *photoRecent = [%c(SBSApplicationShortcutItem) alloc];
+    if (getLatestPhoto() != nil) {        
+        UIApplicationShortcutIcon *photoRecentIcon = [UIApplicationShortcutIcon iconWithCustomImage:getLatestPhoto()];
+        photoRecent.icon = [photoRecentIcon sbsShortcutIcon];
+    }
     photoRecent.localizedTitle = @"Most Recent";
     photoRecent.type = @"com.apple.photos.shortcuts.recentphoto";
     

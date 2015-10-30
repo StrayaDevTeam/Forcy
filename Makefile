@@ -2,11 +2,11 @@ ARCHS = armv7 arm64
 TARGET = iphone:clang:latest:latest
 THEOS_BUILD_DIR = Packages
 
-include $(THEOS)/makefiles/common.mk
+include theos/makefiles/common.mk
 
 TWEAK_NAME = Forcy
 Forcy_FILES = Tweak.xm
-Forcy_FRAMEWORKS = UIKit AudioToolbox
+Forcy_FRAMEWORKS = UIKit AudioToolbox Photos
 Forcy_PRIVATE_FRAMEWORKS = BackBoardServices
 
 include $(THEOS_MAKE_PATH)/tweak.mk
