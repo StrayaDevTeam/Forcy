@@ -275,6 +275,22 @@ UITapGestureRecognizer *doubleTap;
     mapsSearch.icon = [mapsSearchIcon sbsShortcutIcon];
 
     mapsApp.staticShortcutItems = [[NSArray alloc] initWithObjects:mapsHome, mapsMarkLocation, mapsShareLocation, mapsSearch, nil];   
+
+    SBApplication *snapchatApp = [[%c(SBApplicationController) sharedInstance] applicationWithBundleIdentifier:@"com.toyopagroup.picaboo"];
+    UIApplicationShortcutIcon *snapchatAddFriendsIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"quickaction_addfriends"];
+    UIApplicationShortcutIcon *snapchatChatIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"quickaction_chat"];
+
+    SBSApplicationShortcutItem *snapchatAddFriends = [%c(SBSApplicationShortcutItem) alloc];
+    snapchatAddFriends.localizedTitle = @"Add Friends";
+    snapchatAddFriends.type = @"com.snapchat.quick_action_type.add_friends";
+    snapchatAddFriends.icon = [snapchatAddFriendsIcon sbsShortcutIcon];
+
+    SBSApplicationShortcutItem *snapchatChat = [%c(SBSApplicationShortcutItem) alloc];
+    snapchatChat.localizedTitle = @"Chat With...";
+    snapchatChat.type = @"com.snapchat.quick_action_type.chat_with";
+    snapchatChat.icon = [snapchatChatIcon sbsShortcutIcon];
+
+    snapchatApp.staticShortcutItems = [[NSArray alloc] initWithObjects:snapchatAddFriends,snapchatChat, nil];
 }
 %end
 
