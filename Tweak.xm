@@ -124,7 +124,7 @@ UITapGestureRecognizer *doubleTap;
 %hook SBApplicationShortcutMenu
 -(void)_setupViews{
     %orig;
-    if(menuEnabled && removeBackgroundBlur){
+    if(enabled && menuEnabled && removeBackgroundBlur){
         _UIBackdropView *_blurView = MSHookIvar<_UIBackdropView*>(self, "_blurView");
         [_blurView setHidden:true];
     }

@@ -104,10 +104,13 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier specifier:(PSSpecifier *)specifier {
     if((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier specifier:specifier])){
 
-        NSDictionary *properties = specifier.properties;
+        NSMutableDictionary *properties = specifier.properties;
         //UIImage *bkIm = properties[@"iconImage"];
         _background = [[UIImageView alloc] initWithImage:properties[@"iconImage"]];
         _background.frame = CGRectMake(10, 15, 70, 70);
+        _background.layer.cornerRadius = 15;
+        _background.layer.masksToBounds = TRUE;
+        properties[@"iconImage"] = nil;
         [self addSubview:_background];
 
         CGRect frame = [self frame];
