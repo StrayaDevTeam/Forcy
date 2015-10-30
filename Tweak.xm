@@ -12,7 +12,8 @@ static void loadPreferences() {
         @"vibrationTime": [NSNumber numberWithFloat:50],
         @"invokeMethods": [NSNumber numberWithInteger:0],
         @"menuEnabled": @YES,
-        @"peekAndPopSens": [NSNumber numberWithInteger:45]
+        @"peekAndPopSens": [NSNumber numberWithInteger:45],
+        @"peekAndPopEnabled" @YES
     }];
     
     enabled = [preferences boolForKey:@"enabled"];
@@ -24,6 +25,7 @@ static void loadPreferences() {
     invokeMethods = [preferences integerForKey:@"invokeMethods"];
     menuEnabled = [preferences boolForKey:@"menuEnabled"];
     peekAndPopSens = [preferences integerForKey:@"peekAndPopSens"];
+    peekAndPopEnabled = [preferences boolForKey:@"peekAndPopEnabled"];
 }
 
 void hapticFeedback(){

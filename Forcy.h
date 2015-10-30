@@ -18,6 +18,7 @@ bool FirstPress;
 bool menuEnabled;
 CGFloat lightPress;
 NSInteger peekAndPopSens = 20;
+bool peekAndPopEnabled;
 
 @interface _UITouchForceMessage : NSObject
 @property (nonatomic) double timestamp;
