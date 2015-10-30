@@ -51,7 +51,7 @@ UITapGestureRecognizer *doubleTap;
     //im trying mum - i did it you proud?
 
     //HBLogInfo(@"setLoaction:arg1 = %@", arg1);
-    if(menuEnabled){
+    if(enabled && menuEnabled){
         if(invokeMethods == 0){
             /*UILongPressGestureRecognizer *shortcutMenuPeekGesture = MSHookIvar<UILongPressGestureRecognizer *>(self, "_shortcutMenuPeekGesture");
             shortcutMenuPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:[%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
@@ -101,7 +101,7 @@ UITapGestureRecognizer *doubleTap;
 }
 
 - (void)_handleFirstHalfLongPressTimer:(id)timer{
-    if(enabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] && timer != nil){
+    if(enabled && menuEnabled && [[%c(SBIconController) sharedInstance] _canRevealShortcutMenu] && timer != nil){
         if(invokeMethods == 0){
             [[%c(SBIconController) sharedInstance] _revealMenuForIconView:self presentImmediately:true];
             [self cancelLongPressTimer];
@@ -124,7 +124,7 @@ UITapGestureRecognizer *doubleTap;
 %hook SBApplicationShortcutMenu
 -(void)_setupViews{
     %orig;
-    if(enabled && removeBackgroundBlur){
+    if(menuEnabled && removeBackgroundBlur){
         _UIBackdropView *_blurView = MSHookIvar<_UIBackdropView*>(self, "_blurView");
         [_blurView setHidden:true];
     }
@@ -196,7 +196,7 @@ UITapGestureRecognizer *doubleTap;
 - (void)setMajorRadius:(float)arg1 {
     if(peekAndPopEnabled){
     // NSLog(@"View: %@", self.view.gestureRecognizers);
-        if (![self.view isKindOfClass:[NSClassFromString(@"SBIconView") class]]) {
+        //if (![self.view isKindOfClass:[NSClassFromString(@"SBIconView") class]]) {
             if (!FirstPress) {
                 lightPress = peekAndPopSens;
                 
@@ -213,7 +213,7 @@ UITapGestureRecognizer *doubleTap;
             if ([self _pathMajorRadius] < lightPress) {
                 HardPress = 1;
             }
-        }
+        //}
     }
     %orig;
 }
@@ -231,24 +231,24 @@ UITapGestureRecognizer *doubleTap;
 %end
 
 UIImage *getLatestPhoto() {
-        PHImageManager *imgManager = [PHImageManager defaultManager];
-        PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
-        requestOptions.synchronous = TRUE;
+    PHImageManager *imgManager = [PHImageManager defaultManager];
+    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+    requestOptions.synchronous = TRUE;
 
-        PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-        fetchOptions.sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending: TRUE], nil];
-        __block UIImage *finalImage = nil;
+    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+    fetchOptions.sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending: TRUE], nil];
+    __block UIImage *finalImage = nil;
 
-        if ([PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions]) {
-            PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
-            if (fetchResult.count > 0) {
-                [imgManager requestImageForAsset:[fetchResult objectAtIndex:(fetchResult.count-1)] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:requestOptions resultHandler:^(UIImage *result, NSDictionary *info){
-                        finalImage = result;
-                    }];
-            }
+    if ([PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions]) {
+        PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+        if (fetchResult.count > 0) {
+            [imgManager requestImageForAsset:[fetchResult objectAtIndex:(fetchResult.count-1)] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:requestOptions resultHandler:^(UIImage *result, NSDictionary *info){
+                    finalImage = result;
+                }];
         }
+    }
 
-        return finalImage;
+    return finalImage;
 }
 
 %hook SpringBoard

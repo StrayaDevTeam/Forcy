@@ -4,6 +4,24 @@
 <dict>
 	<key>items</key>
 	<array>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSSwitchCell</string>
+            <key>default</key>
+            <true/>
+            <key>defaults</key>
+            <string>com.strayadevteam.forcyprefs</string>
+            <key>key</key>
+            <string>menuEnabled</string>
+            <key>label</key>
+            <string>Enabled</string>
+            <key>PostNotification</key>
+            <string>com.strayadevteam.forcyprefs/prefsChanged</string>
+        </dict>
 		<dict>
             <key>cell</key>
             <string>PSGroupCell</string>
@@ -148,6 +166,6 @@
         </dict>
 	</array>
 	<key>title</key>
-	<string>Forcy</string>
+	<string>3D Touch Menus</string>
 </dict>
 </plist>
