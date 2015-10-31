@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import <Preferences/PSTableCell.h>
 #import <Preferences/PSSpecifier.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface ForcyDevPrefs : PSListController {
 }
@@ -89,6 +90,42 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"https://mobile.twitter.com/" stringByAppendingString:user]]];
 }
 
+-(void)openDBTwitter {
+    NSString *user = @"devbug0";
+    if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot:"]])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"tweetbot:///user_profile/" stringByAppendingString:user]]];
+
+    else if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific:"]])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"twitterrific:///profile?screen_name=" stringByAppendingString:user]]];
+
+    else if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetings:"]])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"tweetings:///user?screen_name=" stringByAppendingString:user]]];
+
+    else if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter:"]])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"twitter://user?screen_name=" stringByAppendingString:user]]];
+
+    else
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"https://mobile.twitter.com/" stringByAppendingString:user]]];
+}
+
+-(void)openKirbTwitter {
+    NSString *user = @"hbkirb";
+    if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot:"]])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"tweetbot:///user_profile/" stringByAppendingString:user]]];
+
+    else if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific:"]])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"twitterrific:///profile?screen_name=" stringByAppendingString:user]]];
+
+    else if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetings:"]])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"tweetings:///user?screen_name=" stringByAppendingString:user]]];
+
+    else if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter:"]])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"twitter://user?screen_name=" stringByAppendingString:user]]];
+
+    else
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"https://mobile.twitter.com/" stringByAppendingString:user]]];
+}
+
 @end
 
 @interface ForcyDevCell : PSTableCell {
@@ -105,9 +142,8 @@
     if((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier specifier:specifier])){
 
         NSMutableDictionary *properties = specifier.properties;
-        //UIImage *bkIm = properties[@"iconImage"];
         _background = [[UIImageView alloc] initWithImage:properties[@"iconImage"]];
-        _background.frame = CGRectMake(10, 15, 70, 70);
+        _background.frame = CGRectMake(10, 35, 70, 70);
         _background.layer.cornerRadius = 15;
         _background.layer.masksToBounds = TRUE;
         properties[@"iconImage"] = nil;
@@ -115,7 +151,7 @@
 
         CGRect frame = [self frame];
 
-        devName = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y +10, frame.size.width, frame.size.height)];
+        devName = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y, frame.size.width, frame.size.height)];
         [devName setText:properties[@"devName"]];
         [devName setBackgroundColor:[UIColor clearColor]];
         [devName setTextColor:[UIColor blackColor]];
@@ -123,7 +159,7 @@
 
         [self addSubview:devName];
 
-        devTwitter = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 30, frame.size.width, frame.size.height)];
+        devTwitter = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 20, frame.size.width, frame.size.height)];
         [devTwitter setText:properties[@"devTwitter"]];
         [devTwitter setTextColor:[UIColor grayColor]];
         [devTwitter setBackgroundColor:[UIColor clearColor]];
@@ -131,8 +167,9 @@
 
         [self addSubview:devTwitter];
 
-        jobSub = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 50, frame.size.width, frame.size.height)];
+        jobSub = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 50, frame.size.width - 105, frame.size.height + 30)];
         [jobSub setText:properties[@"jobSub"]];
+        [jobSub setNumberOfLines:4];
         [jobSub setTextColor:[UIColor grayColor]];
         [jobSub setBackgroundColor:[UIColor clearColor]];
         [jobSub setFont:[UIFont fontWithName:@"Helvetica Light" size:15]];

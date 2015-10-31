@@ -13,7 +13,7 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>height</key>
-			<string>100</string>
+			<string>140</string>
 			<key>cellClass</key>
 			<string>ForcyDevCell</string>
 			<key>devName</key>
@@ -21,7 +21,7 @@
 			<key>devTwitter</key>
 			<string>@theninjaprawn</string>
 			<key>jobSub</key>
-			<string>Head Bitch</string>
+			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
 			<key>icon</key>
 			<string>George.png</string>
 			<key>action</key>
@@ -31,7 +31,7 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>height</key>
-			<string>100</string>
+			<string>140</string>
 			<key>cellClass</key>
 			<string>ForcyDevCell</string>
 			<key>devName</key>
@@ -39,7 +39,7 @@
 			<key>devTwitter</key>
 			<string>@GreenyDev</string>
 			<key>jobSub</key>
-			<string>Most Commits</string>
+			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
 			<key>icon</key>
 			<string>Greeny.png</string>
 			<key>action</key>
@@ -49,7 +49,7 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>height</key>
-			<string>100</string>
+			<string>140</string>
 			<key>cellClass</key>
 			<string>ForcyDevCell</string>
 			<key>devName</key>
@@ -57,7 +57,7 @@
 			<key>devTwitter</key>
 			<string>@evilgoldfish01</string>
 			<key>jobSub</key>
-			<string>Fixes Stuff</string>
+			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
 			<key>icon</key>
 			<string>Evan.png</string>
 			<key>action</key>
@@ -67,7 +67,43 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>height</key>
-			<string>100</string>
+			<string>140</string>
+			<key>cellClass</key>
+			<string>ForcyDevCell</string>
+			<key>devName</key>
+			<string>강림한 deVbug</string>
+			<key>devTwitter</key>
+			<string>@deVbug0</string>
+			<key>jobSub</key>
+			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
+			<key>icon</key>
+			<string>devBug.png</string>
+			<key>action</key>
+			<string>openDBTwitter</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>height</key>
+			<string>140</string>
+			<key>cellClass</key>
+			<string>ForcyDevCell</string>
+			<key>devName</key>
+			<string>Adam Demasi</string>
+			<key>devTwitter</key>
+			<string>@hbkirb</string>
+			<key>jobSub</key>
+			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
+			<key>icon</key>
+			<string>Kirb.png</string>
+			<key>action</key>
+			<string>openKirbTwitter</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>height</key>
+			<string>140</string>
 			<key>cellClass</key>
 			<string>ForcyDevCell</string>
 			<key>devName</key>
@@ -75,7 +111,7 @@
 			<key>devTwitter</key>
 			<string>@HHunterDev</string>
 			<key>jobSub</key>
-			<string>Done Some Preferences Shit</string>
+			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
 			<key>icon</key>
 			<string>Hayden.png</string>
 			<key>action</key>
