@@ -60,17 +60,18 @@ UITapGestureRecognizer *doubleTap;
             shortcutPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget: [%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
             shortcutPeekGesture.minimumPressDuration = shortHoldTime;
             [self addGestureRecognizer:shortcutPeekGesture];
+        } else if(invokeMethods == 1){
+        //NSLog(@"invokeMethods == 1");
+            swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
+            swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
+            swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
+            [self addGestureRecognizer:swipeUp];
         } else if(invokeMethods == 2){
             doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fc_handleDoubleTapGesture:)];
             doubleTap.numberOfTapsRequired = 2;
             [self addGestureRecognizer:doubleTap];
             [doubleTap release];
         }
-        //NSLog(@"invokeMethods == 1");
-        swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
-        swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
-        swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
-        [self addGestureRecognizer:swipeUp];
     }
     return %orig;
 }
@@ -331,6 +332,11 @@ UIImage *getLatestPhoto() {
     snapchatChat.icon = [snapchatChatIcon sbsShortcutIcon];
 
     snapchatApp.staticShortcutItems = [[NSArray alloc] initWithObjects:snapchatAddFriends,snapchatChat, nil];
+
+    [mapsSearch release];
+    [mapsHome release];
+    [mapsShareLocation release];
+    [mapsMarkLocation release];
 }
 %end
 
