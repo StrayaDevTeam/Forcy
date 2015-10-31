@@ -21,7 +21,7 @@
 			<key>devTwitter</key>
 			<string>@theninjaprawn</string>
 			<key>jobSub</key>
-			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
+			<string>Came up with the original idea for the tweak and fixes most of the things Greeny breaks</string>
 			<key>icon</key>
 			<string>George.png</string>
 			<key>action</key>
@@ -39,7 +39,7 @@
 			<key>devTwitter</key>
 			<string>@GreenyDev</string>
 			<key>jobSub</key>
-			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
+			<string>Came up with ideas to implement into the tweak and worked with George to get things working</string>
 			<key>icon</key>
 			<string>Greeny.png</string>
 			<key>action</key>
@@ -57,7 +57,7 @@
 			<key>devTwitter</key>
 			<string>@evilgoldfish01</string>
 			<key>jobSub</key>
-			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
+			<string>Fixes what George and Greeny breaks when they get sick of trying to fix them</string>
 			<key>icon</key>
 			<string>Evan.png</string>
 			<key>action</key>
@@ -75,7 +75,7 @@
 			<key>devTwitter</key>
 			<string>@deVbug0</string>
 			<key>jobSub</key>
-			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
+			<string>A curious figure that hangs in the shadows but fixes the most important things that break</string>
 			<key>icon</key>
 			<string>devBug.png</string>
 			<key>action</key>
@@ -111,7 +111,7 @@
 			<key>devTwitter</key>
 			<string>@HHunterDev</string>
 			<key>jobSub</key>
-			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
+			<string>Came in to pretty up the preferences and that's about all he added to the tweak, better not be paying him</string>
 			<key>icon</key>
 			<string>Hayden.png</string>
 			<key>action</key>

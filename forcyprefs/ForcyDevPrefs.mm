@@ -159,7 +159,7 @@
 
         [self addSubview:devName];
 
-        devTwitter = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 20, frame.size.width, frame.size.height)];
+        devTwitter = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 22, frame.size.width, frame.size.height)];
         [devTwitter setText:properties[@"devTwitter"]];
         [devTwitter setTextColor:[UIColor grayColor]];
         [devTwitter setBackgroundColor:[UIColor clearColor]];
