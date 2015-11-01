@@ -4,6 +4,8 @@
 #import <Preferences/PSSpecifier.h>
 #import <QuartzCore/QuartzCore.h>
 
+#define kDeviceWidth [[UIScreen mainScreen] bounds].size.width
+
 @interface ForcyDevPrefs : PSListController {
 }
 @end
@@ -134,6 +136,7 @@
     UILabel *devTwitter;
     UILabel *jobSub;
     UIImage *iconImage;
+    UIImageView *twitterLogoView;
 }
 @end
 
@@ -144,18 +147,23 @@
         NSMutableDictionary *properties = specifier.properties;
         _background = [[UIImageView alloc] initWithImage:properties[@"iconImage"]];
         _background.frame = CGRectMake(10, 35, 70, 70);
-        _background.layer.cornerRadius = 15;
-        _background.layer.masksToBounds = TRUE;
+        _background.layer.cornerRadius = _background.frame.size.width / 2;
+        _background.layer.masksToBounds = YES;
         properties[@"iconImage"] = nil;
         [self addSubview:_background];
 
         CGRect frame = [self frame];
 
+        UIImage *twitterLogo = [[UIImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"/Library/PreferenceBundles/ForcyPrefs.bundle/Twitter.png"]];
+        twitterLogoView = [[UIImageView alloc] initWithImage:twitterLogo];
+        twitterLogoView.frame = CGRectMake(kDeviceWidth - 40, 58.75, 30, 22.5);
+        [self addSubview:twitterLogoView];
+
         devName = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y, frame.size.width, frame.size.height)];
         [devName setText:properties[@"devName"]];
         [devName setBackgroundColor:[UIColor clearColor]];
         [devName setTextColor:[UIColor blackColor]];
-        [devName setFont:[UIFont fontWithName:@"Helvetica Light" size:23]];
+        [devName setFont:[UIFont fontWithName:@"Helvetica Light" size:21]];
 
         [self addSubview:devName];
 
@@ -167,7 +175,7 @@
 
         [self addSubview:devTwitter];
 
-        jobSub = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 50, frame.size.width - 105, frame.size.height + 30)];
+        jobSub = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 95, frame.origin.y + 50, kDeviceWidth - (kDeviceWidth / 2.29), frame.size.height + 30)];
         [jobSub setText:properties[@"jobSub"]];
         [jobSub setNumberOfLines:4];
         [jobSub setTextColor:[UIColor grayColor]];
@@ -175,6 +183,9 @@
         [jobSub setFont:[UIFont fontWithName:@"Helvetica Light" size:15]];
 
         [self addSubview:jobSub];
+
+        
+
     }
     return self;
 }
