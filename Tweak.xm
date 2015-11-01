@@ -40,6 +40,27 @@ void hapticFeedback(){
     }
 }
 
+UIImage *getLatestPhoto() {
+    PHImageManager *imgManager = [PHImageManager defaultManager];
+    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+    requestOptions.synchronous = TRUE;
+
+    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+    fetchOptions.sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending: TRUE], nil];
+    __block UIImage *finalImage = nil;
+
+    if ([PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions]) {
+        PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+        if (fetchResult.count > 0) {
+            [imgManager requestImageForAsset:[fetchResult objectAtIndex:(fetchResult.count-1)] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:requestOptions resultHandler:^(UIImage *result, NSDictionary *info){
+                    finalImage = result;
+                }];
+        }
+    }
+
+    return finalImage;
+}
+
 SBIconView *currentlyHighlightedIcon;
 
 %hook SBIconView 
@@ -129,6 +150,7 @@ UITapGestureRecognizer *doubleTap;
         _UIBackdropView *_blurView = MSHookIvar<_UIBackdropView*>(self, "_blurView");
         [_blurView setHidden:true];
     }
+    getLatestPhoto();
 }
 %end
 
@@ -231,27 +253,6 @@ UITapGestureRecognizer *doubleTap;
 }
 %end
 
-UIImage *getLatestPhoto() {
-    PHImageManager *imgManager = [PHImageManager defaultManager];
-    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
-    requestOptions.synchronous = TRUE;
-
-    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-    fetchOptions.sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending: TRUE], nil];
-    __block UIImage *finalImage = nil;
-
-    if ([PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions]) {
-        PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
-        if (fetchResult.count > 0) {
-            [imgManager requestImageForAsset:[fetchResult objectAtIndex:(fetchResult.count-1)] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:requestOptions resultHandler:^(UIImage *result, NSDictionary *info){
-                    finalImage = result;
-                }];
-        }
-    }
-
-    return finalImage;
-}
-
 %hook SpringBoard
 
 -(void)applicationDidFinishLaunching:(id)application {
@@ -337,6 +338,14 @@ UIImage *getLatestPhoto() {
     [mapsHome release];
     [mapsShareLocation release];
     [mapsMarkLocation release];
+
+    [photoFavorites release];
+    [photoRecent release];
+    [photoYear release];
+    [photoSearch release];
+
+    [snapchatChat release];
+    [snapchatAddFriends release];
 }
 %end
 
