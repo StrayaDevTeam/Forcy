@@ -72,6 +72,8 @@ UITapGestureRecognizer *doubleTap;
     //im trying mum - i did it you proud?
 
     //HBLogInfo(@"setLoaction:arg1 = %@", arg1);
+    [self removeGestureRecognizer:swipeUp];
+    [self removeGestureRecognizer:doubleTap];
     if(enabled && menuEnabled){
         if(invokeMethods == 0){
             /*UILongPressGestureRecognizer *shortcutMenuPeekGesture = MSHookIvar<UILongPressGestureRecognizer *>(self, "_shortcutMenuPeekGesture");
