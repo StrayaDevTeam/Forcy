@@ -325,12 +325,12 @@ UITapGestureRecognizer *doubleTap;
         UIApplicationShortcutIcon *snapchatChatIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"quickaction_chat"];
     
         SBSApplicationShortcutItem *snapchatAddFriends = [%c(SBSApplicationShortcutItem) alloc];
-        snapchatAddFriends.localizedTitle = @"Add Friends";
+        snapchatAddFriends.localizedTitle = [[NSBundle bundleWithPath:snapchatApp.path] localizedStringForKey:@"add_friends_quick_action" value:@"" table:nil];
         snapchatAddFriends.type = @"com.snapchat.quick_action_type.add_friends";
         snapchatAddFriends.icon = [snapchatAddFriendsIcon sbsShortcutIcon];
     
         SBSApplicationShortcutItem *snapchatChat = [%c(SBSApplicationShortcutItem) alloc];
-        snapchatChat.localizedTitle = @"Chat With...";
+        snapchatChat.localizedTitle = [[NSBundle bundleWithPath:snapchatApp.path] localizedStringForKey:@"chat_with_quick_action" value:@"" table:nil];
         snapchatChat.type = @"com.snapchat.quick_action_type.chat_with";
         snapchatChat.icon = [snapchatChatIcon sbsShortcutIcon];
     
