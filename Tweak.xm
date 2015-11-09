@@ -152,7 +152,6 @@ UITapGestureRecognizer *doubleTap;
         _UIBackdropView *_blurView = MSHookIvar<_UIBackdropView*>(self, "_blurView");
         [_blurView setHidden:true];
     }
-    getLatestPhoto();
 }
 %end
 
@@ -267,17 +266,17 @@ UITapGestureRecognizer *doubleTap;
         UIApplicationShortcutIcon *photosYearIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"QuickActionAYearAgo-OrbHW"];
         
         SBSApplicationShortcutItem *photoSearch = [%c(SBSApplicationShortcutItem) alloc];
-        photoSearch.localizedTitle = @"Search";
+        photoSearch.localizedTitle = [[NSBundle bundleWithPath:photoApp.path] localizedStringForKey:@"SEARCH" value:@"" table:nil];
         photoSearch.type = @"com.apple.photos.shortcuts.search";
         photoSearch.icon = [photoSearchIcon sbsShortcutIcon];
     
         SBSApplicationShortcutItem *photoFavorites = [%c(SBSApplicationShortcutItem) alloc];
-        photoFavorites.localizedTitle = @"Favorites";
+        photoFavorites.localizedTitle = [[NSBundle bundleWithPath:photoApp.path] localizedStringForKey:@"FAVORITES" value:@"" table:nil];
         photoFavorites.type = @"com.apple.photos.shortcuts.favorites";
         photoFavorites.icon = [photoFavoritesIcon sbsShortcutIcon];
     
         SBSApplicationShortcutItem *photoYear = [%c(SBSApplicationShortcutItem) alloc];
-        photoYear.localizedTitle = @"One Year Ago";
+        photoYear.localizedTitle = [[NSBundle bundleWithPath:photoApp.path] localizedStringForKey:@"ONE_YEAR_AGO" value:@"" table:nil];
         photoYear.type = @"com.apple.photos.shortcuts.oneyearago";
         photoYear.icon = [photosYearIcon sbsShortcutIcon];
     
@@ -286,7 +285,7 @@ UITapGestureRecognizer *doubleTap;
             UIApplicationShortcutIcon *photoRecentIcon = [UIApplicationShortcutIcon iconWithCustomImage:getLatestPhoto()];
             photoRecent.icon = [photoRecentIcon sbsShortcutIcon];
         }
-        photoRecent.localizedTitle = @"Most Recent";
+        photoRecent.localizedTitle = [[NSBundle bundleWithPath:photoApp.path] localizedStringForKey:@"MOST_RECENT_PHOTO" value:@"" table:nil];
         photoRecent.type = @"com.apple.photos.shortcuts.recentphoto";
         
         photoApp.staticShortcutItems = [[NSArray alloc] initWithObjects:photoRecent, photoFavorites, photoYear, photoSearch, nil];
@@ -299,22 +298,22 @@ UITapGestureRecognizer *doubleTap;
         UIApplicationShortcutIcon *mapsSearchIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeSearch];
     
         SBSApplicationShortcutItem *mapsHome = [%c(SBSApplicationShortcutItem) alloc];
-        mapsHome.localizedTitle = @"Directions Home";
+        mapsHome.localizedTitle = [[NSBundle bundleWithPath:mapsApp.path] localizedStringForKey:@"QUICK_ACTION_DIRECTIONS_HOME" value:@"" table:@"InfoPlist-OrbHW"];
         mapsHome.type = @"com.apple.Maps.directions";
         mapsHome.icon = [mapsHomeIcon sbsShortcutIcon];
     
         SBSApplicationShortcutItem *mapsMarkLocation = [%c(SBSApplicationShortcutItem) alloc];
-        mapsMarkLocation.localizedTitle = @"Mark My Location";
+        mapsMarkLocation.localizedTitle = [[NSBundle bundleWithPath:mapsApp.path] localizedStringForKey:@"QUICK_ACTION_MARK_MY_LOCATION" value:@"" table:@"InfoPlist-OrbHW"];
         mapsMarkLocation.type = @"com.apple.Maps.mark-my-location";
         mapsMarkLocation.icon = [mapsLocationIcon sbsShortcutIcon];
     
         SBSApplicationShortcutItem *mapsShareLocation = [%c(SBSApplicationShortcutItem) alloc];
-        mapsShareLocation.localizedTitle = @"Send My Location";
+        mapsShareLocation.localizedTitle = [[NSBundle bundleWithPath:mapsApp.path] localizedStringForKey:@"QUICK_ACTION_SEND_MY_LOCATION" value:@"" table:@"InfoPlist-OrbHW"];
         mapsShareLocation.type = @"com.apple.Maps.share-location";
         mapsShareLocation.icon = [mapsShareIcon sbsShortcutIcon];
     
         SBSApplicationShortcutItem *mapsSearch = [%c(SBSApplicationShortcutItem) alloc];
-        mapsSearch.localizedTitle = @"Search Nearby";
+        mapsSearch.localizedTitle = [[NSBundle bundleWithPath:mapsApp.path] localizedStringForKey:@"QUICK_ACTION_SEARCH_NEARBY" value:@"" table:@"InfoPlist-OrbHW"];
         mapsSearch.type = @"com.apple.Maps.search-nearby";
         mapsSearch.icon = [mapsSearchIcon sbsShortcutIcon];
     

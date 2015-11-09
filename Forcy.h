@@ -66,6 +66,7 @@ bool peekAndPopEnabled;
 
 @interface SBApplication
 @property(copy, nonatomic) NSArray *staticShortcutItems;
+-(id)path;
 @end
 
 @interface SBApplicationIcon : NSObject
