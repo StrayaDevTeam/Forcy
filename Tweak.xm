@@ -40,7 +40,7 @@ void hapticFeedback(){
     }
 }
 
-UIImage *getLatestPhoto() {
+/*UIImage *getLatestPhoto() {
     PHImageManager *imgManager = [PHImageManager defaultManager];
     PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
     requestOptions.synchronous = TRUE;
@@ -60,7 +60,7 @@ UIImage *getLatestPhoto() {
 
     return finalImage;
 }
-
+*/
 SBIconView *currentlyHighlightedIcon;
 
 %hook SBIconView 
@@ -83,12 +83,20 @@ UITapGestureRecognizer *doubleTap;
             shortcutPeekGesture = [[UILongPressGestureRecognizer alloc] initWithTarget: [%c(SBIconController) sharedInstance] action:@selector(_handleShortcutMenuPeek:)];
             shortcutPeekGesture.minimumPressDuration = shortHoldTime;
             [self addGestureRecognizer:shortcutPeekGesture];
-        } else if(invokeMethods == 1){
-        //NSLog(@"invokeMethods == 1");
-            swipeUp = [[[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)] autorelease];
+
+            swipeUp = [[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)];
             swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
             swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
             [self addGestureRecognizer:swipeUp];
+            [swipeUp release];
+        } else if(invokeMethods == 1){
+        //NSLog(@"invokeMethods == 1");
+            swipeUp = [[%c(UISwipeGestureRecognizer) alloc] initWithTarget:self action:@selector(fc_swiped:)];
+            swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
+            swipeUp.delegate = (id <UIGestureRecognizerDelegate>)self;
+            [self addGestureRecognizer:swipeUp];
+            [swipeUp release];
+
         } else if(invokeMethods == 2){
             doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fc_handleDoubleTapGesture:)];
             doubleTap.numberOfTapsRequired = 2;
@@ -132,8 +140,6 @@ UITapGestureRecognizer *doubleTap;
         } else if (invokeMethods == 1){
             [[%c(SBIconController) sharedInstance] setIsEditing:YES];
             [self _handleSecondHalfLongPressTimer:nil];
-        } else if (invokeMethods == 2){
-
         }
     }
     %orig;
@@ -241,17 +247,6 @@ UITapGestureRecognizer *doubleTap;
     }
     %orig;
 }
-
-
-
-%new +(id)sharedInstance {
-    static id sharedInstance = nil;
-    static dispatch_once_t token = 0;
-    dispatch_once(&token, ^{
-        sharedInstance = [self new];
-    });
-    return sharedInstance;
-}
 %end
 
 %hook SpringBoard
@@ -281,10 +276,10 @@ UITapGestureRecognizer *doubleTap;
         photoYear.icon = [photosYearIcon sbsShortcutIcon];
     
         SBSApplicationShortcutItem *photoRecent = [%c(SBSApplicationShortcutItem) alloc];
-        if (getLatestPhoto() != nil) {        
+        /*if (getLatestPhoto() != nil) {        
             UIApplicationShortcutIcon *photoRecentIcon = [UIApplicationShortcutIcon iconWithCustomImage:getLatestPhoto()];
             photoRecent.icon = [photoRecentIcon sbsShortcutIcon];
-        }
+        }*/
         photoRecent.localizedTitle = [[NSBundle bundleWithPath:photoApp.path] localizedStringForKey:@"MOST_RECENT_PHOTO" value:@"" table:nil];
         photoRecent.type = @"com.apple.photos.shortcuts.recentphoto";
         
