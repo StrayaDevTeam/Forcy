@@ -4,7 +4,7 @@
 <dict>
 	<key>items</key>
 	<array>
-		
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -23,7 +23,7 @@
 			<key>jobSub</key>
 			<string>Came up with the original idea for the tweak and fixes most of the things Greeny breaks</string>
 			<key>icon</key>
-			<string>George.png</string>
+			<string>George.jpg</string>
 			<key>action</key>
 			<string>openGeorgeTwitter</string>
 		</dict>
@@ -41,7 +41,7 @@
 			<key>jobSub</key>
 			<string>Came up with ideas to implement into the tweak and worked with George to get things working</string>
 			<key>icon</key>
-			<string>Greeny.png</string>
+			<string>Greeny.jpg</string>
 			<key>action</key>
 			<string>openGreenyTwitter</string>
 		</dict>
@@ -59,7 +59,7 @@
 			<key>jobSub</key>
 			<string>Fixes what George and Greeny breaks when they get sick of trying to fix them</string>
 			<key>icon</key>
-			<string>Evan.png</string>
+			<string>Evan.jpg</string>
 			<key>action</key>
 			<string>openEvanTwitter</string>
 		</dict>
@@ -77,7 +77,7 @@
 			<key>jobSub</key>
 			<string>A curious figure that hangs in the shadows but fixes the most important things that break</string>
 			<key>icon</key>
-			<string>devBug.png</string>
+			<string>devBug.jpg</string>
 			<key>action</key>
 			<string>openDBTwitter</string>
 		</dict>
@@ -95,7 +95,7 @@
 			<key>jobSub</key>
 			<string>I'm that guy that pops in every now and then telling you everything you're doing is wrong</string>
 			<key>icon</key>
-			<string>Kirb.png</string>
+			<string>Kirb.jpg</string>
 			<key>action</key>
 			<string>openKirbTwitter</string>
 		</dict>
@@ -113,7 +113,7 @@
 			<key>jobSub</key>
 			<string>Came in to pretty up the preferences and that's about all he added to the tweak</string>
 			<key>icon</key>
-			<string>Hayden.png</string>
+			<string>Hayden.jpg</string>
 			<key>action</key>
 			<string>openHaydenTwitter</string>
 		</dict>
