@@ -114,3 +114,12 @@
     return finalImage;
 }
 %end
+
+%hook TFNTwitterDeviceFeatureSwitches
++ (_Bool)isNewMessageShortcutEnabled {
+    return YES;
+}
++ (_Bool)areApplicationShortcutsEnabled {
+    return YES;
+}
+%end
