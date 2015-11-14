@@ -6,20 +6,20 @@
 
 extern "C" void AudioServicesPlaySystemSoundWithVibration(SystemSoundID inSystemSoundID, id unknown, NSDictionary *options);
 
-static NSUserDefaults *preferences;
-static bool enabled;
-static bool hapticFeedbackIsEnabled;
-static bool removeBackgroundBlur;
-static bool preferForceTouch;
-static CGFloat shortHoldTime;
-static int vibrationTime;
-static NSInteger invokeMethods;
-static bool HardPress;
-static bool FirstPress;
-static bool menuEnabled;
-static CGFloat lightPress;
-static NSInteger peekAndPopSens = 20;
-static bool peekAndPopEnabled;
+NSUserDefaults *preferences;
+bool enabled;
+bool hapticFeedbackIsEnabled;
+bool removeBackgroundBlur;
+bool preferForceTouch;
+CGFloat shortHoldTime;
+int vibrationTime;
+NSInteger invokeMethods;
+bool HardPress;
+bool FirstPress;
+bool menuEnabled;
+CGFloat lightPress;
+NSInteger peekAndPopSens = 20;
+bool peekAndPopEnabled;
 
 @interface _UITouchForceMessage : NSObject
 @property (nonatomic) double timestamp;

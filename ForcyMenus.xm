@@ -94,7 +94,7 @@
 }
 %new
 -(UIImage*)getLatestPhoto{
-    PHImageManager *imgManager = [PHImageManager defaultManager];
+    /*PHImageManager *imgManager = [PHImageManager defaultManager];
     PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
     requestOptions.synchronous = TRUE;
 
@@ -109,9 +109,9 @@
                     finalImage = result;
                 }];
         }
-    }
+    }*/
 
-    return finalImage;
+    return [DCIMImageWellUtilities cameraPreviewWellImage];
 }
 %end
 

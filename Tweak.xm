@@ -28,7 +28,7 @@ static void loadPreferences() {
     peekAndPopEnabled = [preferences boolForKey:@"peekAndPopEnabled"];
 }
 
-void hapticFeedback(){
+static void hapticFeedback(){
     if(hapticFeedbackIsEnabled){
         NSMutableDictionary* dict = [NSMutableDictionary dictionary];
         NSMutableArray* arr = [NSMutableArray array];

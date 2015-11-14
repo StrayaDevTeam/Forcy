@@ -5,9 +5,9 @@ THEOS_BUILD_DIR = Packages
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Forcy
-Forcy_FILES = Tweak.xm
+Forcy_FILES = Tweak.xm ForcyMenus.xm
 Forcy_FRAMEWORKS = UIKit AudioToolbox Photos
-Forcy_PRIVATE_FRAMEWORKS = BackBoardServices
+Forcy_PRIVATE_FRAMEWORKS = BackBoardServices DCIMServices
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 
