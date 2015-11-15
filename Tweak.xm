@@ -63,6 +63,7 @@ static void hapticFeedback(){
 */
 SBIconView *currentlyHighlightedIcon;
 
+%group SpringBoardHooks
 %hook SBIconView 
 
 UISwipeGestureRecognizer *swipeUp;
@@ -104,7 +105,7 @@ UITapGestureRecognizer *doubleTap;
             [doubleTap release];
         }
     }
-    return %orig;
+    %orig;
 }
 
 %new -(void)fc_handleDoubleTapGesture:(UITapGestureRecognizer *)gesture{
@@ -161,6 +162,20 @@ UITapGestureRecognizer *doubleTap;
 }
 %end
 
+
+%hook SBIconController
+- (void)_revealMenuForIconView:(SBIconView *)iconView presentImmediately:(BOOL)imm {
+    if(hapticFeedbackIsEnabled && !self.isEditing){
+        hapticFeedback();
+    }
+    %orig(iconView, YES);
+}
+%end
+
+%end
+
+
+
 %hook UIScreen
 - (int)_forceTouchCapability {
     return 2;
@@ -176,16 +191,6 @@ UITapGestureRecognizer *doubleTap;
 %hook UIDevice
 - (BOOL)_supportsForceTouch {
     return TRUE;
-}
-%end
-
-
-%hook SBIconController
-- (void)_revealMenuForIconView:(SBIconView *)iconView presentImmediately:(BOOL)imm {
-    if(hapticFeedbackIsEnabled && !self.isEditing){
-        hapticFeedback();
-    }
-    %orig(iconView, YES);
 }
 %end
 
@@ -257,4 +262,8 @@ UITapGestureRecognizer *doubleTap;
                                 NULL,
                                 CFNotificationSuspensionBehaviorDeliverImmediately);
     loadPreferences();
+    if ([[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.SpringBoard"]) {
+        %init(SpringBoardHooks);
+    }
+    %init;
 }

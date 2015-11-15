@@ -7,7 +7,7 @@ include $(THEOS)/makefiles/common.mk
 TWEAK_NAME = Forcy
 Forcy_FILES = Tweak.xm ForcyMenus.xm
 Forcy_FRAMEWORKS = UIKit AudioToolbox Photos
-Forcy_PRIVATE_FRAMEWORKS = BackBoardServices DCIMServices
+Forcy_PRIVATE_FRAMEWORKS = BackBoardServices DCIMServices SAObjects
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 

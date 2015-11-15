@@ -1,8 +1,10 @@
 #import "Forcy.h"
 
+%group SpringBoardMenus
 %hook SpringBoard
 -(void)applicationDidFinishLaunching:(id)application {
     %orig();
+    [SAUIUnlockDevice unlockDevice];
     SBApplication *photoApp = [[%c(SBApplicationController) sharedInstance] applicationWithBundleIdentifier:@"com.apple.mobileslideshow"];
 
     UIApplicationShortcutIcon *photoSearchIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeSearch];
@@ -123,3 +125,11 @@
     return YES;
 }
 %end
+
+%end
+
+%ctor {
+    if ([[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.SpringBoard"]) {
+        %init(SpringBoardMenus);
+    }
+}

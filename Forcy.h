@@ -34,6 +34,10 @@ static bool peekAndPopEnabled;
 + (id)sharedInstance;
 @end
 
+@interface SAUIUnlockDevice
++(id)unlockDevice;
+@end
+
 @interface SpringBoard
 -(UIImage*)getLatestPhoto;
 @end
