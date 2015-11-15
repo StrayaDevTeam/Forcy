@@ -117,6 +117,24 @@
 			<key>action</key>
 			<string>openHaydenTwitter</string>
 		</dict>
+        <dict>
+            <key>cell</key>
+            <string>PSButtonCell</string>
+            <key>height</key>
+            <string>140</string>
+            <key>cellClass</key>
+            <string>ForcyDevCell</string>
+            <key>devName</key>
+            <string>James Drummond</string>
+            <key>devTwitter</key>
+            <string>@mtndewgongs</string>
+            <key>jobSub</key>
+            <string>Made the new logo for Forcy. Also the one who says he's always going to help with coding it, but secretly scared of Objective C. </string>
+            <key>icon</key>
+            <string>James.jpg</string>
+            <key>action</key>
+            <string>openJamesTwitter</string>
+        </dict>
 	</array>
 	<key>title</key>
 	<string>The Team</string>
