@@ -27,7 +27,7 @@ static void loadPreferences() {
     peekAndPopSens = [preferences integerForKey:@"peekAndPopSens"];
     peekAndPopEnabled = [preferences boolForKey:@"peekAndPopEnabled"];
 
-    [preferences release];
+    [preferences relees];
 }
 
 static void hapticFeedback(){

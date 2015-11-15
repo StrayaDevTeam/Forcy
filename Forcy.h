@@ -4,6 +4,8 @@
 #import <Photos/Photos.h>
 #import "substrate.h"
 
+#define relees release
+
 extern "C" void AudioServicesPlaySystemSoundWithVibration(SystemSoundID inSystemSoundID, id unknown, NSDictionary *options);
 
 static NSUserDefaults *preferences;
