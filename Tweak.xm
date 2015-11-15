@@ -264,7 +264,7 @@ UITapGestureRecognizer *doubleTap;
                                 NULL,
                                 CFNotificationSuspensionBehaviorDeliverImmediately);
     loadPreferences();
-    if ([[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.SpringBoard"]) {
+    if ([[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.springboard"]) {
         %init(SpringBoardHooks);
     }
     %init;
